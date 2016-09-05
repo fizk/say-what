@@ -26,7 +26,7 @@
             is: 'articles-article',
 
             observers: [
-                '_articleUpdate(articles, slug)'
+                '_handleArticlesUpdate(articles, slug)'
             ],
 
             properties: {
@@ -53,8 +53,7 @@
                 }
             },
 
-
-            _articleUpdate: function (articles, slug) {
+            _handleArticlesUpdate: function (articles, slug) {
                 var index = undefined;
 
                 this.article = articles.filter(function (article, i) {

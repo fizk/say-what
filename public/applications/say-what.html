@@ -12425,7 +12425,7 @@ element.
             is: 'articles-article',
 
             observers: [
-                '_articleUpdate(articles, slug)'
+                '_handleArticlesUpdate(articles, slug)'
             ],
 
             properties: {
@@ -12452,8 +12452,7 @@ element.
                 }
             },
 
-
-            _articleUpdate: function (articles, slug) {
+            _handleArticlesUpdate: function (articles, slug) {
                 var index = undefined;
 
                 this.article = articles.filter(function (article, i) {
@@ -12481,7 +12480,7 @@ element.
         <template is="dom-repeat" items="{{articles}}">
             <div>
                 <h2>
-                    <img src="[[item.icon]]"> <a href="[[_computeUrl(item.slug)]]">[[item.title]]</a>
+                    <img src="[[item.icon]]"> <a href="[[_computeArticleUrl(item.slug)]]">[[item.title]]</a>
                     <template is="dom-if" if="[[user]]">
                         <a href="#">edit</a>
                     </template>
@@ -12493,12 +12492,7 @@ element.
         Polymer({
             is: 'articles-list',
 
-            properties: {
-
-
-            },
-
-            _computeUrl: function (slug) {
+            _computeArticleUr: function (slug) {
                 return '/articles/' + slug;
             }
         });
@@ -15050,7 +15044,6 @@ Custom property | Description | Default
                 <li><a href="/about">/about</a></li>
             </ul>
 
-
             <template is="dom-if" if="[[!user]]">
                 <a href="#" on-click="_requestLogin">Log in</a>
             </template>
@@ -15112,11 +15105,6 @@ Custom property | Description | Default
                 user: {
                     type: Object,
                     value: undefined
-                },
-
-                loggedIn: {
-                    type: Boolean,
-                    value: false
                 }
             },
 
