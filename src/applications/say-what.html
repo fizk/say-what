@@ -1,0 +1,24 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+
+<link rel="import" href="../containers/app-container/app-container.html">
+<link rel="import" href="../components/say-what-navigation/say-what-navigation.html">
+
+<dom-module id="say-what">
+    <template>
+        <app-location route="{{route}}"></app-location>
+        <div>
+            <div>
+                <say-what-navigation></say-what-navigation>
+            </div>
+            <div>
+                <app-container route="{{route}}"></app-container>
+            </div>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: 'say-what'
+        });
+    </script>
+</dom-module>

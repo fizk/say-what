@@ -1,0 +1,63 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../../../bower_components/polymerfire/firebase-auth.html">
+
+<link rel="import" href="../app-container/app-container.html">
+<link rel="import" href="../index-container/index-container.html">
+<link rel="import" href="../articles-container/articles-container.html">
+<link rel="import" href="../about-container/about-container.html">
+
+
+<dom-module id="app-container">
+    <template>
+        <firebase-app auth-domain="project-5974597191121826159.firebaseapp.com"
+                      database-url="https://project-5974597191121826159.firebaseio.com"
+                      api-key="AIzaSyBYLv3YDWS_uwGbIQw1Ajnc-mIpvv6GIp4">
+        </firebase-app>
+        <firebase-auth id="auth" user="{{user}}" provider="facebook" on-error="handleError">
+        </firebase-auth>
+
+        <app-route
+                route="{{route}}"
+                pattern="/:page"
+                data="{{routeData}}"
+                tail="{{subRoute}}">
+        </app-route>
+        <iron-pages selected="[[routeData.page]]" attr-for-selected="data-name">
+            <index-container data-name=""></index-container>
+            <articles-container data-name="articles" route="{{subRoute}}"></articles-container>
+            <about-container data-name="about"></about-container>
+        </iron-pages>
+
+    </template>
+    <script>
+        Polymer({
+            is: 'app-container',
+
+            properties: {
+                user: {
+                    type: Object,
+                    observer: '_userObserver'
+                }
+            },
+
+            handleError: function () {
+                console.log(arguments);
+            },
+
+            _userObserver: function (user) {
+                    console.log(user);
+            },
+            
+            ready: function () {
+                this.$.auth.signInWithPopup()
+                        .then(function(response) {console.log('success', response)})
+                        .catch(function(error) {console.log('error', error)});
+            }
+
+        });
+    </script>
+</dom-module>

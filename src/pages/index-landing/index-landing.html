@@ -1,0 +1,63 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="index-landing">
+    <template>
+        <iron-ajax
+                auto
+                url="/data/data.json"
+                handle-as="json"
+                on-response="_handleResponse"
+                debounce-duration="300"></iron-ajax>
+
+        <h1>index-landing</h1>
+
+        <h2>Main articles</h2>
+        <ul>
+            <template is="dom-repeat" items="[[mainArticles]]">
+                <li><a href="[[_computeArticleUrl(item)]]">[[item.title]]</a></li>
+            </template>
+        </ul>
+        <h2>Pinned articles</h2>
+        <ul>
+            <template is="dom-repeat" items="[[pinnedArticles]]">
+                <li><a href="[[_computeArticleUrl(item)]]">[[item.title]]</a></li>
+            </template>
+        </ul>
+    </template>
+    <script>
+        Polymer({
+            is: 'index-landing',
+
+            properties: {
+                pinnedArticles: {
+                    type: Array,
+                    value: []
+                },
+                mainArticles: {
+                    type: Array,
+                    value: []
+                }
+            },
+
+            _computeArticleUrl: function (article) {
+                return '/articles/' + article.slug;
+            },
+
+
+            _handleResponse: function (response) {
+                this.pinnedArticles = response.detail.response.articles.sort(function (a, b) {
+                    return new Date(b.date) - new Date(a.date);
+                }).filter(function (article) {
+                    return article.pinned == true
+                }).slice(0, 1);
+
+                this.mainArticles = response.detail.response.articles.sort(function (a, b) {
+                    return new Date(b.date) - new Date(a.date);
+                }).filter(function (article) {
+                    return article.pinned != true
+                }).slice(0, 3);
+            }
+        })
+    </script>
+</dom-module>

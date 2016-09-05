@@ -1,0 +1,30 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+
+<dom-module id="articles-list">
+    <template>
+        <h1>articles-list</h1>
+
+        <template is="dom-repeat" items="{{articles}}">
+            <div>
+                <h2>
+                    <img src="[[item.icon]]"> <a href="[[_computeUrl(item.slug)]]">[[item.title]]</a>
+                </h2>
+            </div>
+        </template>
+    </template>
+    <script>
+        Polymer({
+            is: 'articles-list',
+
+            properties: {
+
+
+            },
+
+            _computeUrl: function (slug) {
+                return '/articles/' + slug;
+            }
+        });
+    </script>
+</dom-module>

@@ -1,0 +1,68 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html">
+
+<link rel="import" href="../../pages/articles-article/articles-article.html">
+<link rel="import" href="../../pages/articles-list/articles-list.html">
+<link rel="import" href="../../pages/articles-edit/articles-edit.html">
+
+<dom-module id="articles-container">
+    <template>
+        <iron-ajax
+                auto
+                url="/data/data.json"
+                handle-as="json"
+                on-response="_handleResponse"
+                debounce-duration="300"></iron-ajax>
+
+        <app-route
+                route="{{route}}"
+                path="/">
+        </app-route>
+        <app-route
+                route="{{route}}"
+                path="/:slug"
+                data="{{slugData}}">
+        </app-route>
+        <app-route
+                route="{{route}}"
+                path="/:slug/edit"
+                data="{{slugData}}">
+        </app-route>
+
+        <iron-pages selected="[[_routeObserver(route.path)]]" attr-for-selected="key">
+            <articles-list key="" articles="[[articles]]"></articles-list>
+            <articles-article key="selected" articles="[[articles]]" slug="{{_computeSlug(route.path)}}"></articles-article>
+            <articles-edit key="edit"></articles-edit>
+        </iron-pages>
+
+    </template>
+    <script>
+        Polymer({
+            is: 'articles-container',
+
+            properties: {
+                articles: {
+                    type: Array,
+                    value: []
+                }
+            },
+
+            _routeObserver: function (route) {
+                return route ? 'selected' : ''
+            },
+
+            _computeSlug: function (slug) {
+                return slug ? slug.substring(1) : undefined;
+            },
+
+            _handleResponse: function (response) {
+                this.articles = response.detail.response.articles.sort(function (a, b) {
+                    return new Date(b.date) - new Date(a.date);
+                });
+            }
+
+        })
+    </script>
+</dom-module>

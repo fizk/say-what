@@ -1,0 +1,76 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<dom-module id="articles-article">
+    <template>
+
+        <h1>articles-article</h1>
+        [[article.title]]
+        <img src="[[article.icon]]">
+        <template is="dom-repeat" items="[[article.summary]]">
+            <p>[[item]]</p>
+        </template>
+
+        <template is="dom-if" if="[[previous]]">
+            &lt;&lt; <a href$="[[_computeArticleUrl(previous.slug)]]">[[previous.title]]</a>
+        </template>
+        <template is="dom-if" if="[[next]]">
+            <a href$="[[_computeArticleUrl(next.slug)]]">[[next.title]]</a> &gt;&gt;
+        </template>
+
+
+    </template>
+    <script>
+        Polymer({
+            is: 'articles-article',
+
+            observers: [
+                '_articleUpdate(articles, slug)'
+            ],
+
+            properties: {
+
+                slug: {
+                    type: String
+                },
+
+                articles: {
+                    type: Array,
+                    value: []
+                },
+
+                article: {
+                    type: Object
+                },
+
+                previous: {
+                    type: Object
+                },
+
+                next: {
+                    type: Object
+                }
+            },
+
+
+            _articleUpdate: function (articles, slug) {
+                var index = undefined;
+
+                this.article = articles.filter(function (article, i) {
+                    if (article.slug == slug) {
+                        index = i;
+                        return true;
+                    }
+
+                    return false;
+                }).slice(0, 1).pop();
+
+                this.previous = articles[index-1] ? articles[index-1] : undefined;
+                this.next = articles[index+1] ? articles[index+1] : undefined;
+            },
+
+            _computeArticleUrl: function (slug) {
+                return '/articles/' + slug;
+            }
+        });
+    </script>
+</dom-module>
