@@ -1,24 +1,63 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-auth.html">
 
 <link rel="import" href="../containers/app-container/app-container.html">
 <link rel="import" href="../components/say-what-navigation/say-what-navigation.html">
 
 <dom-module id="say-what">
     <template>
+        <firebase-app auth-domain="project-5974597191121826159.firebaseapp.com"
+                      database-url="https://project-5974597191121826159.firebaseio.com"
+                      api-key="AIzaSyBYLv3YDWS_uwGbIQw1Ajnc-mIpvv6GIp4"></firebase-app>
+        <firebase-auth id="auth" user="{{user}}" provider="facebook" on-error="_handleAuthError"></firebase-auth>
         <app-location route="{{route}}"></app-location>
         <div>
             <div>
-                <say-what-navigation></say-what-navigation>
+                <say-what-navigation user="[[user]]"></say-what-navigation>
             </div>
             <div>
-                <app-container route="{{route}}"></app-container>
+                <app-container route="{{route}}" user="[[user]]"></app-container>
             </div>
         </div>
     </template>
     <script>
         Polymer({
-            is: 'say-what'
+            is: 'say-what',
+
+            listeners: {
+                'request-login': '_handleLogin',
+                'request-logout': '_handleLogout'
+            },
+
+            properties: {
+                user: {
+                    type: Object,
+                    value: undefined
+                },
+
+                loggedIn: {
+                    type: Boolean,
+                    value: false
+                }
+            },
+
+            _handleAuthError: function (event) {
+                console.error('on-error', event);
+            },
+
+            _handleLogin: function () {
+                this.$.auth.signInWithPopup()
+                    .then(function(response) {this.user = response.user;}.bind(this))
+                    .catch(function(error) {this.user = undefined;}.bind(this));
+            },
+
+            _handleLogout: function () {
+                this.$.auth.signOut()
+                    .then(function () {this.user = undefined;}.bind(this))
+                    .catch(function () {this.user = undefined;}.bind(this));
+            }
         });
     </script>
 </dom-module>

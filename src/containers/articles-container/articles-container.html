@@ -32,8 +32,8 @@
         </app-route>
 
         <iron-pages selected="[[_routeObserver(route.path)]]" attr-for-selected="key">
-            <articles-list key="" articles="[[articles]]"></articles-list>
-            <articles-article key="selected" articles="[[articles]]" slug="{{_computeSlug(route.path)}}"></articles-article>
+            <articles-list key="" articles="[[articles]]" user="[[user]]"></articles-list>
+            <articles-article key="selected" articles="[[articles]]" slug="{{_computeSlug(route.path)}}" user="[[user]]"></articles-article>
             <articles-edit key="edit"></articles-edit>
         </iron-pages>
 

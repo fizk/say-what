@@ -9,6 +9,9 @@
             <div>
                 <h2>
                     <img src="[[item.icon]]"> <a href="[[_computeUrl(item.slug)]]">[[item.title]]</a>
+                    <template is="dom-if" if="[[user]]">
+                        <a href="#">edit</a>
+                    </template>
                 </h2>
             </div>
         </template>
