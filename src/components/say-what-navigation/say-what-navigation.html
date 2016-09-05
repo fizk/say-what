@@ -1,3 +1,6 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+
 <dom-module id="say-what-navigation">
     <template>
         <nav>
@@ -6,11 +9,39 @@
                 <li><a href="/articles">/articles</a></li>
                 <li><a href="/about">/about</a></li>
             </ul>
+
+            <template is="dom-if" if="[[!user]]">
+                <a href="#" on-click="_requestLogin">Log in</a>
+            </template>
+
+            <template is="dom-if" if="[[user]]">
+                <img src="[[user.photoURL]]" />
+                <p>[[user.displayName]]</p>
+                <a href="#" on-click="_requestLogout">log out</a>
+            </template>
+
         </nav>
     </template>
     <script>
         Polymer({
-            is: 'say-what-navigation'
+            is: 'say-what-navigation',
+
+            properties: {
+                user: {
+                    type: Boolean,
+                    value: false
+                }
+            },
+
+            _requestLogin: function (event) {
+                event.preventDefault();
+                this.fire('request-login');
+            },
+
+            _requestLogout: function (event) {
+                event.preventDefault();
+                this.fire('request-logout');
+            }
         })
     </script>
 </dom-module>

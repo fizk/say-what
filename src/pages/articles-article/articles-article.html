@@ -3,8 +3,11 @@
 <dom-module id="articles-article">
     <template>
 
-        <h1>articles-article</h1>
-        [[article.title]]
+        <template is="dom-if" if="[[user]]">
+            <a href="#">edit</a>
+        </template>
+        <h1>[[article.title]]</h1>
+
         <img src="[[article.icon]]">
         <template is="dom-repeat" items="[[article.summary]]">
             <p>[[item]]</p>
@@ -17,14 +20,13 @@
             <a href$="[[_computeArticleUrl(next.slug)]]">[[next.title]]</a> &gt;&gt;
         </template>
 
-
     </template>
     <script>
         Polymer({
             is: 'articles-article',
 
             observers: [
-                '_articleUpdate(articles, slug)'
+                '_handleArticlesUpdate(articles, slug)'
             ],
 
             properties: {
@@ -51,8 +53,7 @@
                 }
             },
 
-
-            _articleUpdate: function (articles, slug) {
+            _handleArticlesUpdate: function (articles, slug) {
                 var index = undefined;
 
                 this.article = articles.filter(function (article, i) {
