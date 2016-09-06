@@ -31,10 +31,10 @@
                 data="{{slugData}}">
         </app-route>
 
-        <iron-pages selected="[[_routeObserver(route.path)]]" attr-for-selected="key">
+        <iron-pages selected="[[key]]" attr-for-selected="key">
             <articles-list key="" articles="[[articles]]" user="[[user]]"></articles-list>
-            <articles-article key="selected" articles="[[articles]]" slug="{{_computeSlug(route.path)}}" user="[[user]]"></articles-article>
-            <articles-edit key="edit"></articles-edit>
+            <articles-article key="selected" articles="[[articles]]" slug="[[slug]]" user="[[user]]"></articles-article>
+            <articles-edit key="edit" slug="[[slug]]" articles="[[articles]]"></articles-edit>
         </iron-pages>
 
     </template>
@@ -42,19 +42,44 @@
         Polymer({
             is: 'articles-container',
 
+            observers: [
+                '_observerRoutePath(route.path)'
+            ],
+
             properties: {
                 articles: {
                     type: Array,
                     value: []
+                },
+                key: {
+                    type: String,
+                    value: ''
+                },
+                slug: {
+                    type: String
                 }
             },
 
-            _routeObserver: function (route) {
-                return route ? 'selected' : ''
-            },
-
-            _computeSlug: function (slug) {
-                return slug ? slug.substring(1) : undefined;
+            /**
+             *
+             * @param path
+             * @private
+             * @todo this is terrible...
+             */
+            _observerRoutePath: function (path) {
+                if (!path) {
+                    this.slug = undefined;
+                    this.key = '';
+                } else if (path.match(/^\/[0-9a-zA-Z\-]+$/)) {
+                    this.key = 'selected';
+                    this.slug = path.substring(1);
+                } else if (path.match(/^\/[0-9a-zA-Z\-]+\/edit$/)) { //TODO ... && this.user
+                    this.key = 'edit';
+                    this.slug = path.match(/(\/)([0-9a-zA-Z\-]+)(\/edit)$/)[2];
+                } else {
+                    this.slug = undefined;
+                    this.key = '';
+                }
             },
 
             _handleResponse: function (response) {
