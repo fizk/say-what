@@ -8,8 +8,8 @@
     <template>
         <h1>articles-edit</h1>
         [[article.title]]
-        <paper-input value="[[article.title]]" label="Title"></paper-input>
-        <paper-textarea value="[[article.title]]" label="Body"></paper-textarea>
+        <paper-input value="[[article.content.is.title]]" label="Title"></paper-input>
+        <paper-textarea value="[[article.content.is.title]]" label="Body"></paper-textarea>
         <paper-button>Send</paper-button>
     </template>
     <script>
@@ -37,7 +37,7 @@
 
             _observerArticles: function (articles, slug) {
                 this.article = articles.filter(function (article) {
-                    return article.slug == slug;
+                    return article.$key == slug;
                 }).pop();
             }
         })

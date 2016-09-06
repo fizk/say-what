@@ -6,7 +6,7 @@
         <template is="dom-if" if="[[user]]">
             <a href$="[[_computeArticleEditUrl(slug)]]">edit</a>
         </template>
-        <h1>[[article.title]]</h1>
+        <h1>[[article.content.is.title]]</h1>
 
         <img src="[[article.icon]]">
         <template is="dom-repeat" items="[[article.summary]]">
@@ -14,10 +14,10 @@
         </template>
 
         <template is="dom-if" if="[[previous]]">
-            &lt;&lt; <a href$="[[_computeArticleUrl(previous.slug)]]">[[previous.title]]</a>
+            &lt;&lt; <a href$="[[_computeArticleUrl(previous.$key)]]">[[previous.content.is.title]]</a>
         </template>
         <template is="dom-if" if="[[next]]">
-            <a href$="[[_computeArticleUrl(next.slug)]]">[[next.title]]</a> &gt;&gt;
+            <a href$="[[_computeArticleUrl(next.$key)]]">[[next.content.is.title]]</a> &gt;&gt;
         </template>
 
     </template>
@@ -57,7 +57,7 @@
                 var index = undefined;
 
                 this.article = articles.filter(function (article, i) {
-                    if (article.slug == slug) {
+                    if (article.$key == slug) {
                         index = i;
                         return true;
                     }
