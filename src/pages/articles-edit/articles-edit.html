@@ -1,12 +1,45 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
 
 <dom-module id="articles-edit">
     <template>
         <h1>articles-edit</h1>
+        [[article.title]]
+        <paper-input value="[[article.title]]" label="Title"></paper-input>
+        <paper-textarea value="[[article.title]]" label="Body"></paper-textarea>
+        <paper-button>Send</paper-button>
     </template>
     <script>
         Polymer({
-            is: 'articles-edit'
+            is: 'articles-edit',
+
+            observers: [
+                '_observerArticles(articles, slug)'
+            ],
+
+            properties: {
+                articles: {
+                    type: Array,
+                    value: []
+                },
+
+                article: {
+                    type: Object
+                },
+
+                slug: {
+                    type: String
+                }
+            },
+
+            _observerArticles: function (articles, slug) {
+                this.article = articles.filter(function (article) {
+                    return article.slug == slug;
+                }).pop();
+            }
         })
     </script>
 </dom-module>

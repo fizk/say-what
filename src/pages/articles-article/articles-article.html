@@ -4,7 +4,7 @@
     <template>
 
         <template is="dom-if" if="[[user]]">
-            <a href="#">edit</a>
+            <a href$="[[_computeArticleEditUrl(slug)]]">edit</a>
         </template>
         <h1>[[article.title]]</h1>
 
@@ -67,6 +67,10 @@
 
                 this.previous = articles[index-1] ? articles[index-1] : undefined;
                 this.next = articles[index+1] ? articles[index+1] : undefined;
+            },
+
+            _computeArticleEditUrl: function (slug) {
+                return '/articles/' + slug + '/edit';
             },
 
             _computeArticleUrl: function (slug) {
