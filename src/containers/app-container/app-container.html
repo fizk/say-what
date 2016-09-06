@@ -24,15 +24,23 @@
                 data="{{articles}}">
         </firebase-query>
 
-        <iron-pages selected="[[routeData.page]]" attr-for-selected="data-name">
-            <index-container data-name=""></index-container>
-            <articles-container data-name="articles" route="{{subRoute}}" articles="[[articles]]" user="[[user]]"></articles-container>
-            <about-container data-name="about" articles="[[articles]]"></about-container>
+        <iron-pages selected="[[routeData.page]]" attr-for-selected="key">
+            <index-container key="" articles="[[articles]]"></index-container>
+            <articles-container key="articles" route="{{subRoute}}" articles="[[articles]]" user="[[user]]"></articles-container>
+            <about-container key="about"></about-container>
         </iron-pages>
     </template>
     <script>
         Polymer({
-            is: 'app-container'
+            is: 'app-container',
+
+            observers: [
+                    '_articles(articles)'
+            ],
+
+            _articles: function () {
+                console.log(arguments);
+            }
         });
     </script>
 </dom-module>
