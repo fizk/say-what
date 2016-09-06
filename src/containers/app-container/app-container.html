@@ -2,6 +2,7 @@
 <link rel="import" href="../../../bower_components/app-route/app-route.html">
 <link rel="import" href="../../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../../bower_components/polymerfire/firebase-query.html">
 
 <link rel="import" href="../app-container/app-container.html">
 <link rel="import" href="../index-container/index-container.html">
@@ -16,10 +17,17 @@
                 data="{{routeData}}"
                 tail="{{subRoute}}">
         </app-route>
+
+        <firebase-query
+                order-by-child="date/from"
+                path="/work"
+                data="{{articles}}">
+        </firebase-query>
+
         <iron-pages selected="[[routeData.page]]" attr-for-selected="data-name">
             <index-container data-name=""></index-container>
-            <articles-container data-name="articles" route="{{subRoute}}" user="[[user]]"></articles-container>
-            <about-container data-name="about"></about-container>
+            <articles-container data-name="articles" route="{{subRoute}}" articles="[[articles]]" user="[[user]]"></articles-container>
+            <about-container data-name="about" articles="[[articles]]"></about-container>
         </iron-pages>
     </template>
     <script>

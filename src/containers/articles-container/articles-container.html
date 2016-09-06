@@ -1,7 +1,6 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../../bower_components/app-route/app-route.html">
 <link rel="import" href="../../../bower_components/iron-pages/iron-pages.html">
-<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html">
 
 <link rel="import" href="../../pages/articles-article/articles-article.html">
 <link rel="import" href="../../pages/articles-list/articles-list.html">
@@ -9,12 +8,6 @@
 
 <dom-module id="articles-container">
     <template>
-        <iron-ajax
-                auto
-                url="/data/data.json"
-                handle-as="json"
-                on-response="_handleResponse"
-                debounce-duration="300"></iron-ajax>
 
         <app-route
                 route="{{route}}"
@@ -80,14 +73,7 @@
                     this.slug = undefined;
                     this.key = '';
                 }
-            },
-
-            _handleResponse: function (response) {
-                this.articles = response.detail.response.articles.sort(function (a, b) {
-                    return new Date(b.date) - new Date(a.date);
-                });
             }
-
         })
     </script>
 </dom-module>
