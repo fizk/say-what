@@ -3,18 +3,22 @@
 <dom-module id="index-landing">
     <template>
 
-        <h1>index-landing</h1>
-
         <h2>Main articles</h2>
         <ul>
             <template is="dom-repeat" items="[[mainArticles]]">
-                <li><a href="[[_computeArticleUrl(item.$key)]]">[[item.title]]</a></li>
+                <li><a href="[[_computeArticleUrl(item.$key)]]">[[item.content.is.title]]</a></li>
+            </template>
+        </ul>
+        <h2>Upcomming articles</h2>
+        <ul>
+            <template is="dom-repeat" items="[[upcomingArticles]]">
+                <li><a href="[[_computeArticleUrl(item.$key)]]">[[item.content.is.title]]</a></li>
             </template>
         </ul>
         <h2>Pinned articles</h2>
         <ul>
             <template is="dom-repeat" items="[[pinnedArticles]]">
-                <li><a href="[[_computeArticleUrl(item.$key)]]">[[item.title]]</a></li>
+                <li><a href="[[_computeArticleUrl(item.$key)]]">[[item.content.is.title]]</a></li>
             </template>
         </ul>
     </template>
@@ -23,7 +27,7 @@
             is: 'index-landing',
 
             observers: [
-                '_handleArticles(articles)'
+                '_handleArticleListUpdate(articles)'
             ],
 
             properties: {
@@ -37,22 +41,29 @@
                 mainArticles: {
                     type: Array,
                     value: []
+                },
+                upcomingArticles: {
+                    type: Array,
+                    value: []
                 }
+            },
+
+            _handleArticleListUpdate: function (articles) {
+                this.mainArticles = articles.filter(function (article) {
+                    return article.pinned == false && new Date(article.date.from) < new Date();
+                }).slice(0, 3);
+
+                this.pinnedArticles = articles.filter(function (article) {
+                    return article.pinned == true;
+                }).slice(0, 2);
+
+                this.upcomingArticles = articles.filter(function (article) {
+                    return article.pinned == false && new Date(article.date.from) > new Date();
+                });
             },
 
             _computeArticleUrl: function (slug) {
                 return '/articles/' + slug;
-            },
-
-
-            _handleArticles: function (articles) {
-                this.pinnedArticles = articles.filter(function (article) {
-                    return article.pinned == true
-                }).slice(0, 1);
-
-                this.mainArticles = articles.filter(function (article) {
-                    return article.pinned != true
-                }).slice(0, 3);
             }
         })
     </script>

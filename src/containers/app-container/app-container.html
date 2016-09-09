@@ -10,6 +10,7 @@
 <link rel="import" href="../about-container/about-container.html">
 
 <dom-module id="app-container">
+    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
     <template>
         <app-route
                 route="{{route}}"
@@ -18,15 +19,17 @@
                 tail="{{subRoute}}">
         </app-route>
 
-        <firebase-query
-                order-by-child="date/from"
-                path="/work"
-                data="{{articles}}">
-        </firebase-query>
+        <!--<firebase-query-->
+                <!--order-by-child="date/from"-->
+                <!--path="/work"-->
+                <!--data="{{articles}}">-->
+        <!--</firebase-query>-->
+
+
 
         <iron-pages selected="[[routeData.page]]" attr-for-selected="key">
             <index-container key="" articles="[[articles]]"></index-container>
-            <articles-container key="articles" route="{{subRoute}}" articles="[[articles]]" user="[[user]]"></articles-container>
+            <articles-container key="articles" route="{{subRoute}}" articles="[[articles]]" user="[[user]]" database="{{firebase}}"></articles-container>
             <about-container key="about"></about-container>
         </iron-pages>
     </template>
@@ -34,12 +37,39 @@
         Polymer({
             is: 'app-container',
 
-            observers: [
-                    '_articles(articles)'
-            ],
+            properties: {
+                articles: {
+                    type: Array
+                },
 
-            _articles: function () {
-                console.log(arguments);
+                firebase: {
+                    type: Object
+                }
+            },
+            
+            ready: function () {
+                this.firebase = new Firebase('https://klingogbang.firebaseio.com');
+
+                this.firebase.on('child_changed', function (snapshot) {
+                    var changedPost = snapshot.val();
+                    console.log("The updated post title is ", changedPost);
+                });
+
+                this.firebase.child("/work").on("value", function(snapshot) {
+                    var articles = [];
+                    var data = snapshot.val();
+                    for (article in data) {
+                        data[article].$key = article;
+                        articles.push(data[article]);
+                    }
+
+                    this.articles = articles.sort(function (a, b) {
+                        return new Date(b.date.from) - new Date(a.date.from)
+                    });
+
+                }.bind(this));
+
+
             }
         });
     </script>

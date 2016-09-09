@@ -8,6 +8,8 @@
         </template>
         <h1>[[article.content.is.title]]</h1>
 
+        <div>[[article.content.is.text]]</div>
+
         <img src="[[article.icon]]">
         <template is="dom-repeat" items="[[article.summary]]">
             <p>[[item]]</p>
@@ -37,7 +39,7 @@
 
                 articles: {
                     type: Array,
-                    value: []
+                    value: undefined
                 },
 
                 article: {
