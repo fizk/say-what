@@ -8942,7 +8942,7 @@ Copyright 2016 Google Inc. All Rights Reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file or at
 https://github.com/firebase/polymerfire/blob/master/LICENSE
---><script src="../../bower_components/firebase/firebase.js">/*! @license Firebase v3.3.0
+--><script>/*! @license Firebase v3.3.0
     Build: 3.3.0-rc.7
     Terms: https://developers.google.com/terms */
 (function() { var aa="function"==typeof Object.defineProperties?Object.defineProperty:function(a,b,c){if(c.get||c.set)throw new TypeError("ES3 does not support getters and setters.");a!=Array.prototype&&a!=Object.prototype&&(a[b]=c.value)},h="undefined"!=typeof window&&window===this?this:"undefined"!=typeof global?global:this,l=function(){l=function(){};h.Symbol||(h.Symbol=ba)},ca=0,ba=function(a){return"jscomp_symbol_"+(a||"")+ca++},p=function(){l();var a=h.Symbol.iterator;a||(a=h.Symbol.iterator=h.Symbol("iterator"));
@@ -9267,7 +9267,7 @@ Pe.prototype.start=function(){var a=this.Wa,b=this.mf;a.fg=this.id;a.gg=b;for(a.
 Pe.isAvailable=function(){return Qe||!Re&&"undefined"!==typeof document&&null!=document.createElement&&!("object"===typeof window&&window.chrome&&window.chrome.extension&&!/^chrome/.test(window.location.href))&&!("object"===typeof Windows&&"object"===typeof Windows.Dg)&&!0};h=Pe.prototype;h.sd=function(){};h.Tc=function(){this.Bb=!0;this.Wa&&(this.Wa.close(),this.Wa=null);this.gc&&(document.body.removeChild(this.gc),this.gc=null);this.tb&&(clearTimeout(this.tb),this.tb=null)};
 h.fb=function(){this.Bb||(this.f("Longpoll is closing itself"),this.Tc(),this.ja&&(this.ja(this.xc),this.ja=null))};h.close=function(){this.Bb||(this.f("Longpoll is being closed."),this.Tc())};h.send=function(a){a=B(a);this.rb+=a.length;mc(this.Xa,"bytes_sent",a.length);a=Mb(a);a=ab(a,!0);a=ld(a,1840);for(var b=0;b<a.length;b++){var c=this.Wa;c.Qc.push({ug:this.Qe,Bg:a.length,Se:a[b]});c.Ud&&Ve(c);this.Qe++}};function Te(a,b){var c=B(b).length;a.qb+=c;mc(a.Xa,"bytes_received",c)}
 function Se(a,b,c,d){this.Yc=d;this.kb=c;this.ve=new Ne;this.Qc=[];this.$d=Math.floor(1E8*Math.random());this.Kd=!0;this.Qd=Wc();window["pLPCommand"+this.Qd]=a;window["pRTLPCB"+this.Qd]=b;a=document.createElement("iframe");a.style.display="none";if(document.body){document.body.appendChild(a);try{a.contentWindow.document||E("No IE domain setting required")}catch(e){a.src="javascript:void((function(){document.open();document.domain='"+document.domain+"';document.close();})())"}}else throw"Document body has not initialized. Wait to initialize Firebase until after the document is ready.";
-a.contentDocument?a.ib=a.contentDocument:a.contentWindow?a.ib=a.contentWindow.document:a.document&&(a.ib=a.document);this.Ga=a;a="";this.Ga.src&&"javascript:"===this.Ga.src.substr(0,11)&&(a='<script>document.domain="'+document.domain+'";\x3c/script>');a="<html><body>"+a+"</body></html>";try{this.Ga.ib.open(),this.Ga.ib.write(a),this.Ga.ib.close()}catch(f){E("frame writing exception"),f.stack&&E(f.stack),E(f)}}
+a.contentDocument?a.ib=a.contentDocument:a.contentWindow?a.ib=a.contentWindow.document:a.document&&(a.ib=a.document);this.Ga=a;a="";this.Ga.src&&"javascript:"===this.Ga.src.substr(0,11)&&(a='<script>document.domain="'+document.domain+'";\x3c\/script>');a="<html><body>"+a+"</body></html>";try{this.Ga.ib.open(),this.Ga.ib.write(a),this.Ga.ib.close()}catch(f){E("frame writing exception"),f.stack&&E(f.stack),E(f)}}
 Se.prototype.close=function(){this.Ud=!1;if(this.Ga){this.Ga.ib.body.innerHTML="";var a=this;setTimeout(function(){null!==a.Ga&&(document.body.removeChild(a.Ga),a.Ga=null)},Math.floor(0))}var b=this.kb;b&&(this.kb=null,b())};
 function Ve(a){if(a.Ud&&a.Kd&&a.ve.count()<(0<a.Qc.length?2:1)){a.$d++;var b={};b.id=a.fg;b.pw=a.gg;b.ser=a.$d;for(var b=a.Yc(b),c="",d=0;0<a.Qc.length;)if(1870>=a.Qc[0].Se.length+30+c.length){var e=a.Qc.shift(),c=c+"&seg"+d+"="+e.ug+"&ts"+d+"="+e.Bg+"&d"+d+"="+e.Se;d++}else break;We(a,b+c,a.$d);return!0}return!1}function We(a,b,c){function d(){a.ve.remove(c);Ve(a)}a.ve.add(c,1);var e=setTimeout(d,Math.floor(25E3));Ue(a,b,function(){clearTimeout(e);d()})}
 function Ue(a,b,c){setTimeout(function(){try{if(a.Kd){var d=a.Ga.ib.createElement("script");d.type="text/javascript";d.async=!0;d.src=b;d.onload=d.onreadystatechange=function(){var a=d.readyState;a&&"loaded"!==a&&"complete"!==a||(d.onload=d.onreadystatechange=null,d.parentNode&&d.parentNode.removeChild(d),c())};d.onerror=function(){E("Long-poll script failed to load: "+b);a.Kd=!1;a.close()};a.Ga.ib.body.appendChild(d)}}catch(e){}},Math.floor(1))};function Xe(a){Ye(this,a)}var Ze=[Pe,vd];function Ye(a,b){var c=vd&&vd.isAvailable(),d=c&&!(Yb.cf||!0===Yb.get("previous_websocket_failure"));b.Cg&&(c||O("wss:// URL used, but browser isn't known to support websockets.  Trying anyway."),d=!0);if(d)a.Wc=[vd];else{var e=a.Wc=[];md(Ze,function(a,b){b&&b.isAvailable()&&e.push(b)})}}function $e(a){if(0<a.Wc.length)return a.Wc[0];throw Error("No transports available");};function af(a,b,c,d,e,f,g){this.id=a;this.f=cd("c:"+this.id+":");this.te=c;this.Mc=d;this.ja=e;this.se=f;this.M=b;this.Ad=[];this.Oe=0;this.Af=new Xe(b);this.L=0;this.Db=g;this.f("Connection created");bf(this)}
@@ -11219,1170 +11219,6 @@ Example:
 
   </script>
 </dom-module>
-<!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
---><script src="../../bower_components/promise-polyfill/Promise.js">/**
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
-*/
-function MakePromise (asap) {
-  function Promise(fn) {
-		if (typeof this !== 'object' || typeof fn !== 'function') throw new TypeError();
-		this._state = null;
-		this._value = null;
-		this._deferreds = []
-
-		doResolve(fn, resolve.bind(this), reject.bind(this));
-	}
-
-	function handle(deferred) {
-		var me = this;
-		if (this._state === null) {
-			this._deferreds.push(deferred);
-			return
-		}
-		asap(function() {
-			var cb = me._state ? deferred.onFulfilled : deferred.onRejected
-			if (typeof cb !== 'function') {
-				(me._state ? deferred.resolve : deferred.reject)(me._value);
-				return;
-			}
-			var ret;
-			try {
-				ret = cb(me._value);
-			}
-			catch (e) {
-				deferred.reject(e);
-				return;
-			}
-			deferred.resolve(ret);
-		})
-	}
-
-	function resolve(newValue) {
-		try { //Promise Resolution Procedure: https://github.com/promises-aplus/promises-spec#the-promise-resolution-procedure
-			if (newValue === this) throw new TypeError();
-			if (newValue && (typeof newValue === 'object' || typeof newValue === 'function')) {
-				var then = newValue.then;
-				if (typeof then === 'function') {
-					doResolve(then.bind(newValue), resolve.bind(this), reject.bind(this));
-					return;
-				}
-			}
-			this._state = true;
-			this._value = newValue;
-			finale.call(this);
-		} catch (e) { reject.call(this, e); }
-	}
-
-	function reject(newValue) {
-		this._state = false;
-		this._value = newValue;
-		finale.call(this);
-	}
-
-	function finale() {
-		for (var i = 0, len = this._deferreds.length; i < len; i++) {
-			handle.call(this, this._deferreds[i]);
-		}
-		this._deferreds = null;
-	}
-
-	/**
-	 * Take a potentially misbehaving resolver function and make sure
-	 * onFulfilled and onRejected are only called once.
-	 *
-	 * Makes no guarantees about asynchrony.
-	 */
-	function doResolve(fn, onFulfilled, onRejected) {
-		var done = false;
-		try {
-			fn(function (value) {
-				if (done) return;
-				done = true;
-				onFulfilled(value);
-			}, function (reason) {
-				if (done) return;
-				done = true;
-				onRejected(reason);
-			})
-		} catch (ex) {
-			if (done) return;
-			done = true;
-			onRejected(ex);
-		}
-	}
-
-	Promise.prototype['catch'] = function (onRejected) {
-		return this.then(null, onRejected);
-	};
-
-	Promise.prototype.then = function(onFulfilled, onRejected) {
-		var me = this;
-		return new Promise(function(resolve, reject) {
-      handle.call(me, {
-        onFulfilled: onFulfilled,
-        onRejected: onRejected,
-        resolve: resolve,
-        reject: reject
-      });
-		})
-	};
-
-	Promise.resolve = function (value) {
-		if (value && typeof value === 'object' && value.constructor === Promise) {
-			return value;
-		}
-
-		return new Promise(function (resolve) {
-			resolve(value);
-		});
-	};
-
-	Promise.reject = function (value) {
-		return new Promise(function (resolve, reject) {
-			reject(value);
-		});
-	};
-
-	
-  return Promise;
-}
-
-if (typeof module !== 'undefined') {
-  module.exports = MakePromise;
-}
-
-</script>
-<script>
-if (!window.Promise) {
-  window.Promise = MakePromise(Polymer.Base.async);
-}
-</script>
-<script src="../../bower_components/promise-polyfill/Promise-Statics.js">/**
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
-*/
-Promise.all = Promise.all || function () {
-  var args = Array.prototype.slice.call(arguments.length === 1 && Array.isArray(arguments[0]) ? arguments[0] : arguments);
-
-  return new Promise(function (resolve, reject) {
-    if (args.length === 0) return resolve([]);
-    var remaining = args.length;
-    function res(i, val) {
-      try {
-        if (val && (typeof val === 'object' || typeof val === 'function')) {
-          var then = val.then;
-          if (typeof then === 'function') {
-            then.call(val, function (val) { res(i, val) }, reject);
-            return;
-          }
-        }
-        args[i] = val;
-        if (--remaining === 0) {
-          resolve(args);
-        }
-      } catch (ex) {
-        reject(ex);
-      }
-    }
-    for (var i = 0; i < args.length; i++) {
-      res(i, args[i]);
-    }
-  });
-};
-
-Promise.race = Promise.race || function(values) {
-  // TODO(bradfordcsmith): To be consistent with the ECMAScript spec, this
-  //     method should take any iterable, not just an array.
-  var forcedArray = /** @type {!Array<!Thenable>} */ (values);
-  return new Promise(function (resolve, reject) {
-    for(var i = 0, len = forcedArray.length; i < len; i++) {
-      forcedArray[i].then(resolve, reject);
-    }
-  });
-};
-
-</script><!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-<script>
-  (function() {
-    'use strict';
-
-    var SPLICES_RX = /\.splices$/;
-    var LENGTH_RX = /\.length$/;
-    var NUMBER_RX = /\.?#?([0-9]+)$/;
-
-    /**
-     * AppStorageBehavior is an abstract behavior that makes it easy to
-     * synchronize in-memory data and a persistant storage system, such as
-     * the browser's IndexedDB, or a remote database like Firebase.
-     *
-     * For examples of how to use this behavior to write your own app storage
-     * elements see `<app-localstorage-document>` here, or check out
-     * [polymerfire](https://github.com/Firebase/polymerfire) and
-     * [app-pouchdb](https://github.com/PolymerElements/app-pouchdb).
-     *
-     * @polymerBehavior
-     */
-    Polymer.AppStorageBehavior = {
-      properties: {
-        /**
-         * The data to synchronize.
-         */
-        data: {
-          type: Object,
-          notify: true,
-          value: function() {
-            return this.zeroValue;
-          }
-        },
-
-        /**
-         * If this is true transactions will happen one after the other,
-         * never in parallel.
-         *
-         * Specifically, no transaction will begin until every previously
-         * enqueued transaction by this element has completed.
-         *
-         * If it is false, new transactions will be executed as they are
-         * received.
-         */
-        sequentialTransactions: {
-          type: Boolean,
-          value: false
-        },
-
-        /**
-         * When true, will perform detailed logging.
-         */
-        log: {
-          type: Boolean,
-          value: false
-        }
-      },
-
-      observers: [
-        '__dataChanged(data.*)'
-      ],
-
-      created: function() {
-        this.__initialized = false;
-        this.__syncingToMemory = false;
-        this.__initializingStoredValue = null;
-        this.__transactionQueueAdvances = Promise.resolve();
-      },
-
-      ready: function() {
-        this._initializeStoredValue();
-      },
-
-      /**
-       * Override this getter to return true if the value has never been
-       * persisted to storage.
-       *
-       * @type {boolean}
-       */
-      get isNew() {
-        return true;
-      },
-
-      /**
-       * A promise that will resolve once all queued transactions
-       * have completed.
-       *
-       * This field is updated as new transactions are enqueued, so it will
-       * only wait for transactions which were enqueued when the field
-       * was accessed.
-       *
-       * This promise never rejects.
-       *
-       * @type {Promise}
-       */
-      get transactionsComplete() {
-        return this.__transactionQueueAdvances;
-      },
-
-      /**
-       * Override this getter to define the default value to use when
-       * there's no data stored.
-       *
-       * @type {*}
-       */
-      get zeroValue() {
-        return undefined;
-      },
-
-      /**
-       * Override this method.
-       *
-       * If the data value represented by this storage instance is new, this
-       * method generates an attempt to write the value to storage.
-       *
-       * @abstract
-       * @return {Promise} a Promise that settles only once the write has.
-       */
-      save: function() {
-        return Promise.resolve();
-      },
-
-      /**
-       * Optional. Override this method to clear out the mapping of this
-       * storage object and a logical location within storage.
-       *
-       * If this method is supported, after it's called, isNew() should be
-       * true.
-       */
-      reset: function() {},
-
-      /**
-       * Remove the data from storage.
-       *
-       * @return {Promise} A promise that settles once the destruction is
-       *   complete.
-       */
-      destroy: function() {
-        this.data = this.zeroValue;
-        return this.save();
-      },
-
-      /**
-       * Perform the initial sync between storage and memory. This method
-       * is called automatically while the element is being initialized.
-       * Implementations may override it.
-       *
-       * If an implementation intends to call this method, it should instead
-       * call _initializeStoredValue, which provides reentrancy protection.
-       *
-       * @return {Promise} A promise that settles once this process is
-       *     complete.
-       */
-      initializeStoredValue: function() {
-        if (this.isNew) {
-          return Promise.resolve();
-        }
-
-        // If this is not a "new" model, then we should attempt
-        // to read an initial value from storage:
-        return this._getStoredValue('data').then(function(data) {
-          this._log('Got stored value!', data, this.data);
-          if (data == null) {
-            return this._setStoredValue(
-                'data', this.data || this.zeroValue);
-          } else {
-            this.syncToMemory(function() {
-              this.set('data', data);
-            });
-          }
-        }.bind(this));
-      },
-
-      /**
-       * Override this method to implement reading a value from storage.
-       *
-       * @abstract
-       * @param {string} storagePath The path (through storage) of the value to
-       *   create, relative to the root of storage associated with this instance.
-       * @return {Promise} A promise that resolves with the canonical value stored
-       *   at the provided path when the transaction has completed. _If there is no
-       *   such value at she provided path through storage, then the promise will
-       *   resolve to `undefined`._ The promise will be rejected if the transaction
-       *   fails for any reason.
-       */
-      getStoredValue: function(storagePath) {
-        return Promise.resolve();
-      },
-
-      /**
-       * Override this method to implement creating and updating
-       * stored values.
-       *
-       * @abstract
-       * @param {string} storagePath The path of the value to update, relative
-       *   to the root storage path configured for this instance.
-       * @param {*} value The updated in-memory value to apply to the stored value
-       *   at the provided path.
-       * @return {Promise} A promise that resolves with the canonical value stored
-       *   at the provided path when the transaction has completed. The promise
-       *   will be rejected if the transaction fails for any reason.
-       */
-      setStoredValue: function(storagePath, value) {
-        return Promise.resolve(value);
-      },
-
-      /**
-       * Maps a Polymer databinding path to the corresponding path in the
-       * storage system. Override to define a custom mapping.
-       *
-       * The inverse of storagePathToMemoryPath.
-       *
-       * @param {string} path An in-memory path through a storage object.
-       * @return {string} The provided path mapped to the equivalent location in
-       *   storage. This mapped version of the path is suitable for use with the
-       *   CRUD operations on both memory and storage.
-       */
-      memoryPathToStoragePath: function(path) {
-        return path;
-      },
-
-      /**
-       * Maps a storage path to the corresponding Polymer databinding path.
-       * Override to define a custom mapping.
-       *
-       * The inverse of memoryPathToStoragePath.
-       *
-       * @param {string} path The storage path through a storage object.
-       * @return {string} The provided path through storage mapped to the
-       *   equivalent Polymer path through the in-memory representation of storage.
-       */
-      storagePathToMemoryPath: function(path) {
-        return path;
-      },
-
-      /**
-       * Enables performing transformations on the in-memory representation of
-       * storage without activating observers that will cause those
-       * transformations to be re-applied to the storage backend. This is useful
-       * for preventing redundant (or cyclical) application of transformations.
-       *
-       * @param {Function} operation A function that will perform the desired
-       *   transformation. It will be called synchronously, when it is safe to
-       *   apply the transformation.
-       */
-      syncToMemory: function(operation) {
-        if (this.__syncingToMemory) {
-          return;
-        }
-
-        this._group('Sync to memory.');
-
-        this.__syncingToMemory = true;
-        operation.call(this);
-        this.__syncingToMemory = false;
-
-        this._groupEnd('Sync to memory.');
-      },
-
-      /**
-       * A convenience method. Returns true iff value is null, undefined,
-       * an empty array, or an object with no keys.
-       */
-      valueIsEmpty: function(value) {
-        if (Array.isArray(value)) {
-          return value.length === 0;
-        } else if (Object.prototype.isPrototypeOf(value)) {
-          return Object.keys(value).length === 0;
-        } else {
-          return value == null;
-        }
-      },
-
-      /**
-       * Like `getStoredValue` but called with a Polymer path rather than
-       * a storage path.
-       *
-       * @param {string} path The Polymer path to get.
-       * @return {Promise} A Promise of the value stored at that path.
-       */
-      _getStoredValue: function(path) {
-        return this.getStoredValue(this.memoryPathToStoragePath(path));
-      },
-
-      /**
-       * Like `setStoredValue` but called with a Polymer path rather than
-       * a storage path.
-       *
-       * @param {string} path The Polymer path to update.
-       * @param {*} value The updated in-memory value to apply to the stored value
-       *   at the provided path.
-       * @return {Promise} A promise that resolves with the canonical value stored
-       *   at the provided path when the transaction has completed. The promise
-       *   will be rejected if the transaction fails for any reason.
-       */
-      _setStoredValue: function(path, value) {
-        return this.setStoredValue(this.memoryPathToStoragePath(path), value);
-      },
-
-      /**
-       * Enqueues the given function in the transaction queue.
-       *
-       * The transaction queue allows for optional parallelism/sequentiality
-       * via the `sequentialTransactions` boolean property, as well as giving
-       * the user a convenient way to wait for all pending transactions to
-       * finish.
-       *
-       * The given function may be called immediately or after an arbitrary
-       * delay. Its `this` context will be bound to the element.
-       *
-       * If the transaction performs any asynchronous operations it must
-       * return a promise.
-       *
-       * @param {Function} transaction A function implementing the transaction.
-       * @return {Promise} A promise that resolves once the transaction has
-       *   finished. This promise will never reject.
-       */
-      _enqueueTransaction: function(transaction) {
-        if (this.sequentialTransactions) {
-          transaction = transaction.bind(this);
-        } else {
-          var result = transaction.call(this);
-          transaction = function() {
-            return result;
-          };
-        }
-
-        return this.__transactionQueueAdvances = this.__transactionQueueAdvances
-            .then(transaction)
-            .catch(function(error) {
-              this._error('Error performing queued transaction.', error);
-            }.bind(this));
-      },
-
-      /**
-       * A wrapper around `console.log`.
-       */
-      _log: function() {
-        if (this.log) {
-          console.log.apply(console, arguments);
-        }
-      },
-
-      /**
-       * A wrapper around `console.error`.
-       */
-      _error: function() {
-        if (this.log) {
-          console.error.apply(console, arguments);
-        }
-      },
-
-      /**
-       * A wrapper around `console.group`.
-       */
-      _group: function() {
-        if (this.log) {
-          console.group.apply(console, arguments);
-        }
-      },
-
-      /**
-       * A wrapper around `console.groupEnd`.
-       */
-      _groupEnd: function() {
-        if (this.log) {
-          console.groupEnd.apply(console, arguments);
-        }
-      },
-
-      /**
-       * A reentrancy-save wrapper around `this.initializeStoredValue`.
-       * Prefer calling this method over that one.
-       *
-       * @return {Promise} The result of calling `initializeStoredValue`,
-       *   or `undefined` if called while initializing.
-       */
-      _initializeStoredValue: function() {
-        if (this.__initializingStoredValue) {
-          return;
-        }
-
-        this._group('Initializing stored value.');
-
-        var initializingStoredValue =
-            this.__initializingStoredValue =
-            this.initializeStoredValue().then(function() {
-              this.__initialized = true;
-              this.__initializingStoredValue = null;
-              this._groupEnd('Initializing stored value.');
-            }.bind(this));
-
-        return this._enqueueTransaction(function() {
-          return initializingStoredValue;
-        });
-      },
-
-      __dataChanged: function(change) {
-        if (this.isNew ||
-            this.__syncingToMemory ||
-            !this.__initialized ||
-            this.__pathCanBeIgnored(change.path)) {
-          return;
-        }
-
-        var path = this.__normalizeMemoryPath(change.path);
-        var value = change.value;
-        var indexSplices = value && value.indexSplices;
-
-        this._enqueueTransaction(function() {
-
-          this._log('Setting', path + ':', indexSplices || value);
-
-          if (indexSplices && this.__pathIsSplices(path)) {
-            path = this.__parentPath(path);
-            value = this.get(path);
-          }
-
-          return this._setStoredValue(path, value);
-        });
-      },
-
-      __normalizeMemoryPath: function(path) {
-        var parts = path.split('.');
-        var parentPath = [];
-        var currentPath = [];
-        var normalizedPath = [];
-        var index;
-
-        for (var i = 0; i < parts.length; ++i) {
-          currentPath.push(parts[i]);
-          if (/^#/.test(parts[i])) {
-            normalizedPath.push(
-                this.get(parentPath).indexOf(this.get(currentPath)));
-          } else {
-            normalizedPath.push(parts[i]);
-          }
-          parentPath.push(parts[i]);
-        }
-
-        return normalizedPath.join('.');
-      },
-
-      __parentPath: function(path) {
-        var parentPath = path.split('.');
-        return parentPath.slice(0, parentPath.length - 1).join('.');
-      },
-
-      __pathCanBeIgnored: function(path) {
-        return LENGTH_RX.test(path) &&
-            Array.isArray(this.get(this.__parentPath(path)));
-      },
-
-      __pathIsSplices: function(path) {
-        return SPLICES_RX.test(path) &&
-            Array.isArray(this.get(this.__parentPath(path)));
-      },
-
-      __pathRefersToArray: function(path) {
-        return (SPLICES_RX.test(path) || LENGTH_RX.test(path))
-            Array.isArray(this.get(this.__parentPath(path)));
-      },
-
-      __pathTailToIndex: function(path) {
-        var tail = path.split('.').pop();
-        return window.parseInt(tail.replace(NUMBER_RX, '$1'), 10);
-      }
-    };
-  })();
-</script><!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-<!--
-@license
-Copyright 2016 Google Inc. All Rights Reserved.
-Use of this source code is governed by a BSD-style
-license that can be found in the LICENSE file or at
-https://github.com/firebase/polymerfire/blob/master/LICENSE
---><script>
-  (function() {
-    'use strict';
-
-    /** @polymerBehavior Polymer.FirebaseDatabaseBehavior */
-    Polymer.FirebaseDatabaseBehaviorImpl = {
-      properties: {
-        db: {
-          type: Object,
-          computed: '__computeDb(app)'
-        },
-
-        ref: {
-          type: Object,
-          computed: '__computeRef(db, path, disabled)'
-        },
-
-        /**
-         * Path to a Firebase root or endpoint. N.B. `path` is case sensitive.
-         */
-        path: {
-          type: String,
-          observer: '__pathChanged',
-          value: null
-        },
-
-        /**
-         * When true, Firebase listeners won't be activated. This can be useful
-         * in situations where elements are loaded into the DOM before they're
-         * ready to be activated (e.g. navigation, initialization scenarios).
-         */
-        disabled: {
-          type: Boolean,
-          value: false
-        }
-      },
-
-      observers: [
-        '__onlineChanged(online)'
-      ],
-
-      _setFirebaseValue: function(path, value) {
-        this._log('Setting Firebase value at', path, 'to', value)
-        var key = value && value.$key;
-        if (key) {
-          value.$key = null;
-        }
-        var result = this.db.ref(path).set(value);
-        if (key) {
-          value.$key = key;
-        }
-        return result;
-      },
-
-      __computeDb: function(app) {
-        return app ? app.database() : null;
-      },
-
-      __computeRef: function(db, path) {
-        if (this.ref) {
-          this.ref.off();
-        }
-
-        if (db == null ||
-            path == null ||
-            !this.__pathReady(path) ||
-            this.disabled) {
-          return null;
-        }
-
-        return db.ref(path);
-      },
-
-      __pathChanged: function(path, oldPath) {
-        if (oldPath != null && !this.disabled && this.__pathReady(path)) {
-          this.syncToMemory(function() {
-            this.data = this.zeroValue;
-          });
-        }
-      },
-
-      __pathReady: function(path) {
-        return path && path.split('/').slice(1).indexOf('') < 0;
-      },
-
-      __onlineChanged: function(online) {
-        if (!this.ref) {
-          return;
-        }
-
-        if (online) {
-          this.db.goOnline();
-        } else {
-          this.db.goOffline();
-        }
-      }
-    };
-
-    /** @polymerBehavior */
-    Polymer.FirebaseDatabaseBehavior = [
-      Polymer.AppStorageBehavior,
-      Polymer.FirebaseCommonBehavior,
-      Polymer.FirebaseDatabaseBehaviorImpl
-    ];
-  })();
-</script>
-<!--
-@license
-Copyright 2016 Google Inc. All Rights Reserved.
-Use of this source code is governed by a BSD-style
-license that can be found in the LICENSE file or at
-https://github.com/firebase/polymerfire/blob/master/LICENSE
---><!--
-`firebase-query` combines the given properties into query options that generate
-a query, a request for a filtered, ordered, immutable set of Firebase data. The
-results of this Firebase query are then synchronized into the `data` parameter.
-
-Example usage:
-```html
-<firebase-query
-    id="query"
-    app-name="notes"
-    path="/notes/[[uid]]"
-    data="{{data}}">
-</firebase-query>
-
-<template is="dom-repeat" items="{{data}}" as="note">
-  <sticky-note note-data="{{note}}"></sticky-note>
-</template>
-
-<script>
-Polymer({
-  properties: {
-    uid: String,
-    data: {
-      type: Object,
-      observer: 'dataChanged'
-    }
-  },
-
-  dataChanged: function (newData, oldData) {
-    // do something when the query returns values
-  }
-});
-</script>
-```
--->
-<dom-module id="firebase-query" assetpath="../../bower_components/polymerfire/">
-  <script>
-    (function() {
-      'use strict';
-
-      Polymer({
-        is: 'firebase-query',
-
-        behaviors: [
-          Polymer.FirebaseDatabaseBehavior
-        ],
-
-        properties: {
-          /**
-           * [`firebase.database.Query`](https://firebase.google.com/docs/reference/js/firebase.database.Query#property)
-           * object computed by the following parameters.
-           */
-          query: {
-            type: Object,
-            computed: '__computeQuery(ref, orderByChild, limitToFirst, limitToLast, startAt, endAt, equalTo)',
-            observer: '__queryChanged'
-          },
-
-          /**
-           * The child key of each query result to order the query by.
-           *
-           * Changing this value generates a new `query` ordered by the
-           * specified child key.
-           */
-          orderByChild: {
-            type: String,
-            value: ''
-          },
-
-          /**
-           * The value to start at in the query.
-           *
-           * Changing this value generates a new `query` with the specified
-           * starting point. The generated `query` includes children which match
-           * the specified starting point.
-           */
-          startAt: {
-            type: String,
-            value: ''
-          },
-
-          /**
-           * The value to end at in the query.
-           *
-           * Changing this value generates a new `query` with the specified
-           * ending point. The generated `query` includes children which match
-           * the specified ending point.
-           */
-          endAt: {
-            type: String,
-            value: ''
-          },
-
-          /**
-           * Specifies a child-key value that must be matched for each candidate result.
-           *
-           * Changing this value generates a new `query` which includes children
-           * which match the specified value.
-           */
-          equalTo: {
-            type: Object,
-            value: null
-          },
-
-          /**
-           * The maximum number of nodes to include in the query.
-           *
-           * Changing this value generates a new `query` limited to the first
-           * number of children.
-           */
-          limitToFirst: {
-            type: Number,
-            value: 0
-          },
-
-          /**
-           * The maximum number of nodes to include in the query.
-           *
-           * Changing this value generates a new `query` limited to the last
-           * number of children.
-           */
-          limitToLast: {
-            type: Number,
-            value: 0
-          }
-        },
-
-        created: function() {
-          this.__map = {};
-        },
-
-        attached: function() {
-          this.__queryChanged(this.query, this.query);
-        },
-
-        detached: function() {
-          if (this.query == null) {
-            return;
-          }
-
-          this.query.off();
-        },
-
-        child: function(key) {
-          return this.__map[key];
-        },
-
-        get isNew() {
-          return this.disabled || !this.__pathReady(this.path);
-        },
-
-        get zeroValue() {
-          return [];
-        },
-
-        /**
-         * @override
-         */
-        memoryPathToStoragePath: function(path) {
-          var storagePath = this.path;
-
-          if (path !== 'data') {
-            var parts = path.split('.');
-            var index = window.parseInt(parts[1], 10);
-
-            if (index != null && !isNaN(index)) {
-              parts[1] = this.data[index] != null && this.data[index].$key;
-            }
-
-            storagePath += parts.join('/').replace(/^data\.?/, '');
-          }
-
-          return storagePath;
-        },
-
-        /**
-         * @override
-         */
-        storagePathToMemoryPath: function(storagePath) {
-          var path = 'data';
-
-          if (storagePath !== this.path) {
-            var parts = storagePath.replace(this.path + '/', '').split('/');
-            var key = parts[0];
-            var datum = this.__map[key];
-
-            if (datum) {
-              parts[0] = this.__indexFromKey(key);
-            }
-
-            path += '.' + parts.join('.');
-          }
-
-          return path;
-        },
-
-        /**
-         * @override
-         */
-        setStoredValue: function(storagePath, value) {
-          if (storagePath === this.path || /\$key$/.test(storagePath)) {
-            return Promise.resolve();
-          } else {
-            return this._setFirebaseValue(storagePath, value);
-          }
-        },
-
-        _propertyToKey: function(property) {
-          var index = window.parseInt(property, 10);
-          if (index != null && !isNaN(index)) {
-            return this.data[index].$key;
-          }
-        },
-
-        __computeQuery: function(ref, orderByChild, limitToFirst, limitToLast, startAt, endAt, equalTo) {
-          if (ref == null) {
-            return null;
-          }
-
-          var query;
-
-          if (orderByChild) {
-            query = ref.orderByChild(orderByChild);
-          } else {
-            query = ref.orderByKey();
-          }
-
-          if (limitToFirst) {
-            query = query.limitToFirst(limitToFirst);
-          } else if (limitToLast) {
-            query = query.limitToLast(limitToLast);
-          }
-
-          if (startAt) {
-            query = query.startAt(startAt);
-          }
-
-          if (endAt) {
-            query = query.endAt(endAt);
-          }
-
-          if (equalTo) {
-            query = query.equalTo(equalTo);
-          }
-
-          return query;
-        },
-
-        __queryChanged: function(query, oldQuery) {
-          if (oldQuery) {
-            oldQuery.off();
-            this.syncToMemory(function() {
-              this.set('data', this.zeroValue);
-            });
-          }
-
-          if (query) {
-            query.on('child_added', this.__onFirebaseChildAdded, this.__onError, this);
-            query.on('child_removed', this.__onFirebaseChildRemoved, this.__onError, this);
-            query.on('child_changed', this.__onFirebaseChildChanged, this.__onError, this);
-            query.on('child_moved', this.__onFirebaseChildMoved, this.__onError, this);
-          }
-        },
-
-        __indexFromKey: function(key) {
-          for (var i = 0; i < this.data.length; i++) {
-            if (this.data[i].$key === key) {
-              return i;
-            }
-          }
-          return -1;
-        },
-
-        __onFirebaseChildAdded: function(snapshot) {
-          var value = snapshot.val();
-          var key = snapshot.key;
-
-          this._log('Firebase child_added:', key, value);
-
-          value.$key = key;
-
-          this.__map[key] = value;
-          this.push('data', value);
-        },
-
-        __onFirebaseChildRemoved: function(snapshot) {
-          var key = snapshot.key;
-          var value = this.__map[key];
-
-          this._log('Firebase child_removed:', key, value);
-
-          if (value) {
-            this.__map[key] = null;
-            this.async(function() {
-              this.syncToMemory(function() {
-                this.splice('data', this.__indexFromKey(key), 1);
-              });
-            });
-          }
-        },
-
-        __onFirebaseChildChanged: function(snapshot) {
-          var key = snapshot.key;
-          var prev = this.__map[key];
-
-          this._log('Firebase child_changed:', key, prev);
-
-          if (prev) {
-            this.async(function() {
-              var index = this.__indexFromKey(key);
-              var value = snapshot.val();
-              value.$key = key;
-              this.__map[key] = value;
-
-              this.syncToMemory(function() {
-                // TODO(cdata): Update this as appropriate when dom-repeat
-                // supports custom object key indices.
-                if (value instanceof Object) {
-                  for (var property in value) {
-                    this.set(['data', index, property], value[property]);
-                  }
-                  for (var property in prev) {
-                    if(!value.hasOwnProperty(property)) {
-                      this.set(['data', index, property], undefined);
-                    }
-                  }
-                } else {
-                  this.set(['data', index], value);
-                }
-              });
-            });
-          }
-        },
-
-        __onFirebaseChildMoved: function(snapshot, previousChildKey) {
-          var key = snapshot.key;
-          var value = this.__map[key];
-          var targetIndex = previousChildKey ? this.__indexFromKey(previousChildKey) : 0;
-
-          this._log('Firebase child_moved:', key, value,
-              'to index', targetIndex);
-
-          if (value) {
-            var index = this.__indexFromKey(key);
-            value = snapshot.val();
-            value.$key = key;
-            this.__map[key] = value;
-
-            this.async(function() {
-              this.syncToMemory(function() {
-                this.splice('data', index, 1);
-                this.splice('data', targetIndex, 0, value);
-              });
-            });
-          }
-        }
-      });
-    })();
-  </script>
-</dom-module>
 <dom-module id="index-landing" assetpath="../pages/index-landing/">
     <template>
 
@@ -12546,16 +11382,16 @@ Polymer({
     <template>
         <h1>articles-list</h1>
 
-        <template is="dom-repeat" items="{{articles}}">
-            <div>
-                <h2>
+        <ul>
+            <template is="dom-repeat" items="{{articles}}">
+                <li>
                     <img src="[[item.icon]]"> <a href="[[_computeArticleUrl(item.$key)]]">[[item.content.is.title]]</a>
                     <template is="dom-if" if="[[user]]">
                         <a href="[[_computeArticleEditUrl(item.$key)]]">edit</a>
                     </template>
-                </h2>
-            </div>
-        </template>
+                </li>
+            </template>
+        </ul>
     </template>
     <script>
         Polymer({
@@ -18558,19 +17394,155 @@ style this element.
 </script>
 <!--
 @license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
 The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
 The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
---><!--
-iron-request can be used to perform XMLHttpRequests.
+--><script>/**
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+*/
+function MakePromise (asap) {
+  function Promise(fn) {
+		if (typeof this !== 'object' || typeof fn !== 'function') throw new TypeError();
+		this._state = null;
+		this._value = null;
+		this._deferreds = []
 
-    <iron-request id="xhr"></iron-request>
-    ...
-    this.$.xhr.send({url: url, body: params});
--->
+		doResolve(fn, resolve.bind(this), reject.bind(this));
+	}
+
+	function handle(deferred) {
+		var me = this;
+		if (this._state === null) {
+			this._deferreds.push(deferred);
+			return
+		}
+		asap(function() {
+			var cb = me._state ? deferred.onFulfilled : deferred.onRejected
+			if (typeof cb !== 'function') {
+				(me._state ? deferred.resolve : deferred.reject)(me._value);
+				return;
+			}
+			var ret;
+			try {
+				ret = cb(me._value);
+			}
+			catch (e) {
+				deferred.reject(e);
+				return;
+			}
+			deferred.resolve(ret);
+		})
+	}
+
+	function resolve(newValue) {
+		try { //Promise Resolution Procedure: https://github.com/promises-aplus/promises-spec#the-promise-resolution-procedure
+			if (newValue === this) throw new TypeError();
+			if (newValue && (typeof newValue === 'object' || typeof newValue === 'function')) {
+				var then = newValue.then;
+				if (typeof then === 'function') {
+					doResolve(then.bind(newValue), resolve.bind(this), reject.bind(this));
+					return;
+				}
+			}
+			this._state = true;
+			this._value = newValue;
+			finale.call(this);
+		} catch (e) { reject.call(this, e); }
+	}
+
+	function reject(newValue) {
+		this._state = false;
+		this._value = newValue;
+		finale.call(this);
+	}
+
+	function finale() {
+		for (var i = 0, len = this._deferreds.length; i < len; i++) {
+			handle.call(this, this._deferreds[i]);
+		}
+		this._deferreds = null;
+	}
+
+	/**
+	 * Take a potentially misbehaving resolver function and make sure
+	 * onFulfilled and onRejected are only called once.
+	 *
+	 * Makes no guarantees about asynchrony.
+	 */
+	function doResolve(fn, onFulfilled, onRejected) {
+		var done = false;
+		try {
+			fn(function (value) {
+				if (done) return;
+				done = true;
+				onFulfilled(value);
+			}, function (reason) {
+				if (done) return;
+				done = true;
+				onRejected(reason);
+			})
+		} catch (ex) {
+			if (done) return;
+			done = true;
+			onRejected(ex);
+		}
+	}
+
+	Promise.prototype['catch'] = function (onRejected) {
+		return this.then(null, onRejected);
+	};
+
+	Promise.prototype.then = function(onFulfilled, onRejected) {
+		var me = this;
+		return new Promise(function(resolve, reject) {
+      handle.call(me, {
+        onFulfilled: onFulfilled,
+        onRejected: onRejected,
+        resolve: resolve,
+        reject: reject
+      });
+		})
+	};
+
+	Promise.resolve = function (value) {
+		if (value && typeof value === 'object' && value.constructor === Promise) {
+			return value;
+		}
+
+		return new Promise(function (resolve) {
+			resolve(value);
+		});
+	};
+
+	Promise.reject = function (value) {
+		return new Promise(function (resolve, reject) {
+			reject(value);
+		});
+	};
+
+	
+  return Promise;
+}
+
+if (typeof module !== 'undefined') {
+  module.exports = MakePromise;
+}
+
+</script>
+<script>
+if (!window.Promise) {
+  window.Promise = MakePromise(Polymer.Base.async);
+}
+</script>
 <script>
   'use strict';
 
@@ -18993,7 +17965,22 @@ iron-request can be used to perform XMLHttpRequests.
       this._setStatusText((this.xhr.statusText === undefined) ? '' : this.xhr.statusText);
     }
   });
-</script>
+</script><!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><!--
+iron-request can be used to perform XMLHttpRequests.
+
+    <iron-request id="xhr"></iron-request>
+    ...
+    this.$.xhr.send({url: url, body: params});
+-->
+
 <script>
   'use strict';
 
@@ -20517,7 +19504,7 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
     <template>
         <h1>articles-edit</h1>
         [[article.title]]
-        <form id="form" is="iron-form">
+        <form id="form" is="iron-form" on-submit="_updateArticle">
             <fieldset>
                 <legend>English</legend>
                 <paper-input value="[[article.content.en.title]]" label="EN Title" name="en_title"></paper-input>
@@ -20525,8 +19512,8 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
             </fieldset>
             <fieldset>
                 <legend>Islenska</legend>
-                <paper-input value="[[article.content.is.title]]" label="EN Title" name="is_title"></paper-input>
-                <paper-textarea value="[[article.content.is.text]]" label="EN Body" name="is_text"></paper-textarea>
+                <paper-input value="[[article.content.is.title]]" label="IS Title" name="is_title"></paper-input>
+                <paper-textarea value="[[article.content.is.text]]" label="IS Body" name="is_text"></paper-textarea>
             </fieldset>
             <fieldset>
                 <paper-toggle-button label="Pinned"></paper-toggle-button>
@@ -20554,39 +19541,33 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
 
                 slug: {
                     type: String
-                },
-
-                database: {
-                    type: Object
                 }
             },
 
-            ready: function () {
-                this.$.form.addEventListener('submit', function (event) {
-                    if (this.article && this.database) {
-                        event.preventDefault();
-                        var formData = event.currentTarget.serialize();
-                        var data = Object.assign({}, this.article, {
-                            content: {
-                                is: {
-                                    title: formData.is_title,
-                                    text: formData.is_text
-                                },
-                                en: {
-                                    title: formData.en_title,
-                                    text: formData.en_text
-                                }
-                            }
-                        });
-                        delete data.$key;
+            _updateArticle: function (event) {
+                if (this.article) {
+                    event.preventDefault();
 
-                        this.database.child('work/' + this.slug).set(data);
-                    }
-                }.bind(this));
+                    var formData = event.currentTarget.serialize();
+                    var data = Object.assign({}, this.article, {
+                        content: {
+                            is: {
+                                title: formData.is_title,
+                                text: formData.is_text
+                            },
+                            en: {
+                                title: formData.en_title,
+                                text: formData.en_text
+                            }
+                        }
+                    });
+                    delete data.$key;
+
+                    this.fire('article-update', {data: data, slug: this.slug});
+                }
             },
 
             _observerArticles: function (articles, slug) {
-                console.log(this.database);
                 this.article = articles.filter(function (article) {
                     return article.$key == slug;
                 }).pop();
@@ -20607,7 +19588,7 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
         <iron-pages selected="[[pageSelected]]" attr-for-selected="key">
             <articles-list key="" articles="{{articles}}" user="[[user]]"></articles-list>
             <articles-article key="selected" articles="{{articles}}" slug="[[slug]]" user="[[user]]"></articles-article>
-            <articles-edit key="edit" slug="[[slug]]" articles="[[articles]]" database="{{database}}"></articles-edit>
+            <articles-edit key="edit" slug="[[slug]]" articles="[[articles]]"></articles-edit>
         </iron-pages>
 
     </template>
@@ -20662,29 +19643,26 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
             is: 'about-container'
         })
     </script>
-</dom-module><dom-module id="app-container" assetpath="../containers/app-container/">
-    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+</dom-module><script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+
+<dom-module id="app-container" assetpath="../containers/app-container/">
     <template>
         <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subRoute}}">
         </app-route>
 
-        <!--<firebase-query-->
-                <!--order-by-child="date/from"-->
-                <!--path="/work"-->
-                <!--data="{{articles}}">-->
-        <!--</firebase-query>-->
-
-
-
         <iron-pages selected="[[routeData.page]]" attr-for-selected="key">
             <index-container key="" articles="[[articles]]"></index-container>
-            <articles-container key="articles" route="{{subRoute}}" articles="[[articles]]" user="[[user]]" database="{{firebase}}"></articles-container>
+            <articles-container key="articles" route="{{subRoute}}" articles="[[articles]]" user="[[user]]"></articles-container>
             <about-container key="about"></about-container>
         </iron-pages>
     </template>
     <script>
         Polymer({
             is: 'app-container',
+
+            listeners: {
+                'article-update': '_articleUpdate'
+            },
 
             properties: {
                 articles: {
@@ -20717,8 +19695,10 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
                     });
 
                 }.bind(this));
+            },
 
-
+            _articleUpdate: function (event) {
+                this.firebase.child('work/' + event.detail.slug).set(event.detail.data);
             }
         });
     </script>

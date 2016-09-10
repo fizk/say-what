@@ -10,7 +10,7 @@
     <template>
         <h1>articles-edit</h1>
         [[article.title]]
-        <form id="form" is="iron-form">
+        <form id="form" is="iron-form" on-submit="_updateArticle">
             <fieldset>
                 <legend>English</legend>
                 <paper-input value="[[article.content.en.title]]" label="EN Title" name="en_title"></paper-input>
@@ -18,8 +18,8 @@
             </fieldset>
             <fieldset>
                 <legend>Islenska</legend>
-                <paper-input value="[[article.content.is.title]]" label="EN Title" name="is_title"></paper-input>
-                <paper-textarea value="[[article.content.is.text]]" label="EN Body" name="is_text"></paper-textarea>
+                <paper-input value="[[article.content.is.title]]" label="IS Title" name="is_title"></paper-input>
+                <paper-textarea value="[[article.content.is.text]]" label="IS Body" name="is_text"></paper-textarea>
             </fieldset>
             <fieldset>
                 <paper-toggle-button label="Pinned"></paper-toggle-button>
@@ -47,39 +47,33 @@
 
                 slug: {
                     type: String
-                },
-
-                database: {
-                    type: Object
                 }
             },
 
-            ready: function () {
-                this.$.form.addEventListener('submit', function (event) {
-                    if (this.article && this.database) {
-                        event.preventDefault();
-                        var formData = event.currentTarget.serialize();
-                        var data = Object.assign({}, this.article, {
-                            content: {
-                                is: {
-                                    title: formData.is_title,
-                                    text: formData.is_text
-                                },
-                                en: {
-                                    title: formData.en_title,
-                                    text: formData.en_text
-                                }
-                            }
-                        });
-                        delete data.$key;
+            _updateArticle: function (event) {
+                if (this.article) {
+                    event.preventDefault();
 
-                        this.database.child('work/' + this.slug).set(data);
-                    }
-                }.bind(this));
+                    var formData = event.currentTarget.serialize();
+                    var data = Object.assign({}, this.article, {
+                        content: {
+                            is: {
+                                title: formData.is_title,
+                                text: formData.is_text
+                            },
+                            en: {
+                                title: formData.en_title,
+                                text: formData.en_text
+                            }
+                        }
+                    });
+                    delete data.$key;
+
+                    this.fire('article-update', {data: data, slug: this.slug});
+                }
             },
 
             _observerArticles: function (articles, slug) {
-                console.log(this.database);
                 this.article = articles.filter(function (article) {
                     return article.$key == slug;
                 }).pop();

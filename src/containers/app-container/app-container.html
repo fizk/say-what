@@ -2,40 +2,37 @@
 <link rel="import" href="../../../bower_components/app-route/app-route.html">
 <link rel="import" href="../../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../../bower_components/app-route/app-location.html">
-<link rel="import" href="../../../bower_components/polymerfire/firebase-query.html">
+<link rel="import" href="../../../bower_components/polymerfire/firebase.html">
 
 <link rel="import" href="../app-container/app-container.html">
 <link rel="import" href="../index-container/index-container.html">
 <link rel="import" href="../articles-container/articles-container.html">
 <link rel="import" href="../about-container/about-container.html">
 
+<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+
 <dom-module id="app-container">
-    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
     <template>
         <app-route
-                route="{{route}}"
-                pattern="/:page"
-                data="{{routeData}}"
-                tail="{{subRoute}}">
+            route="{{route}}"
+            pattern="/:page"
+            data="{{routeData}}"
+            tail="{{subRoute}}">
         </app-route>
-
-        <!--<firebase-query-->
-                <!--order-by-child="date/from"-->
-                <!--path="/work"-->
-                <!--data="{{articles}}">-->
-        <!--</firebase-query>-->
-
-
 
         <iron-pages selected="[[routeData.page]]" attr-for-selected="key">
             <index-container key="" articles="[[articles]]"></index-container>
-            <articles-container key="articles" route="{{subRoute}}" articles="[[articles]]" user="[[user]]" database="{{firebase}}"></articles-container>
+            <articles-container key="articles" route="{{subRoute}}" articles="[[articles]]" user="[[user]]"></articles-container>
             <about-container key="about"></about-container>
         </iron-pages>
     </template>
     <script>
         Polymer({
             is: 'app-container',
+
+            listeners: {
+                'article-update': '_articleUpdate'
+            },
 
             properties: {
                 articles: {
@@ -68,8 +65,10 @@
                     });
 
                 }.bind(this));
+            },
 
-
+            _articleUpdate: function (event) {
+                this.firebase.child('work/' + event.detail.slug).set(event.detail.data);
             }
         });
     </script>
