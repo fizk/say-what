@@ -45,7 +45,7 @@
             },
             
             ready: function () {
-                this.firebase = new Firebase('https://klingogbang.firebaseio.com');
+                this.firebase = new Firebase(this.source);
 
                 this.firebase.on('child_changed', function (snapshot) {
                     var changedPost = snapshot.val();

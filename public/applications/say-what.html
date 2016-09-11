@@ -19675,7 +19675,7 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
             },
             
             ready: function () {
-                this.firebase = new Firebase('https://klingogbang.firebaseio.com');
+                this.firebase = new Firebase(this.source);
 
                 this.firebase.on('child_changed', function (snapshot) {
                     var changedPost = snapshot.val();
@@ -19756,7 +19756,7 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
                 <say-what-navigation user="[[user]]"></say-what-navigation>
             </div>
             <div>
-                <app-container route="{{route}}" user="[[user]]"></app-container>
+                <app-container route="{{route}}" user="[[user]]" source="[[source]]"></app-container>
             </div>
         </div>
     </template>
