@@ -4,16 +4,16 @@
     <template>
         <h1>articles-list</h1>
 
-        <template is="dom-repeat" items="{{articles}}">
-            <div>
-                <h2>
+        <ul>
+            <template is="dom-repeat" items="{{articles}}">
+                <li>
                     <img src="[[item.icon]]"> <a href="[[_computeArticleUrl(item.$key)]]">[[item.content.is.title]]</a>
                     <template is="dom-if" if="[[user]]">
                         <a href="[[_computeArticleEditUrl(item.$key)]]">edit</a>
                     </template>
-                </h2>
-            </div>
-        </template>
+                </li>
+            </template>
+        </ul>
     </template>
     <script>
         Polymer({

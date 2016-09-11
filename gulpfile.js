@@ -14,7 +14,7 @@ gulp.task('vulcanize', function () {
             abspath: '',
             excludes: [],
             stripExcludes: false,
-            inlineScripts: false
+            inlineScripts: true
         })).on('error', console.log)
         .pipe(gulp.dest('./public/applications')).on('error', console.log);
 });

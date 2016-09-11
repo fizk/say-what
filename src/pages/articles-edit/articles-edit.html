@@ -3,14 +3,29 @@
 <link rel="import" href="../../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../../../bower_components/paper-toggle-button/paper-toggle-button.html">
 
 <dom-module id="articles-edit">
     <template>
         <h1>articles-edit</h1>
         [[article.title]]
-        <paper-input value="[[article.content.is.title]]" label="Title"></paper-input>
-        <paper-textarea value="[[article.content.is.title]]" label="Body"></paper-textarea>
-        <paper-button>Send</paper-button>
+        <form id="form" is="iron-form" on-submit="_updateArticle">
+            <fieldset>
+                <legend>English</legend>
+                <paper-input value="[[article.content.en.title]]" label="EN Title" name="en_title"></paper-input>
+                <paper-textarea value="[[article.content.en.text]]" label="EN Body" name="en_text"></paper-textarea>
+            </fieldset>
+            <fieldset>
+                <legend>Islenska</legend>
+                <paper-input value="[[article.content.is.title]]" label="IS Title" name="is_title"></paper-input>
+                <paper-textarea value="[[article.content.is.text]]" label="IS Body" name="is_text"></paper-textarea>
+            </fieldset>
+            <fieldset>
+                <paper-toggle-button label="Pinned"></paper-toggle-button>
+            </fieldset>
+            <button>Send</button>
+        </form>
     </template>
     <script>
         Polymer({
@@ -32,6 +47,29 @@
 
                 slug: {
                     type: String
+                }
+            },
+
+            _updateArticle: function (event) {
+                if (this.article) {
+                    event.preventDefault();
+
+                    var formData = event.currentTarget.serialize();
+                    var data = Object.assign({}, this.article, {
+                        content: {
+                            is: {
+                                title: formData.is_title,
+                                text: formData.is_text
+                            },
+                            en: {
+                                title: formData.en_title,
+                                text: formData.en_text
+                            }
+                        }
+                    });
+                    delete data.$key;
+
+                    this.fire('article-update', {data: data, slug: this.slug});
                 }
             },
 

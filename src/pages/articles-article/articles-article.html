@@ -1,4 +1,5 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/marked-element/marked-element.html">
 
 <dom-module id="articles-article">
     <template>
@@ -7,8 +8,9 @@
             <a href$="[[_computeArticleEditUrl(slug)]]">edit</a>
         </template>
         <h1>[[article.content.is.title]]</h1>
+        <marked-element markdown="[[article.content.is.text]]"></marked-element>
 
-        <img src="[[article.icon]]">
+        <img src="[[article.poster]]">
         <template is="dom-repeat" items="[[article.summary]]">
             <p>[[item]]</p>
         </template>
@@ -37,7 +39,7 @@
 
                 articles: {
                     type: Array,
-                    value: []
+                    value: undefined
                 },
 
                 article: {
