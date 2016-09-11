@@ -1,24 +1,23 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/app-route/app-location.html">
-<link rel="import" href="../../bower_components/polymerfire/firebase-app.html">
-<link rel="import" href="../../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase.html">
 
 <link rel="import" href="../containers/app-container/app-container.html">
 <link rel="import" href="../components/say-what-navigation/say-what-navigation.html">
 
 <dom-module id="say-what">
     <template>
-        <firebase-app auth-domain="klingogbang.firebaseapp.com"
-                      database-url="https://klingogbang.firebaseio.com"
-                      api-key="AIzaSyCgi5eTknYVklYEGRqg2xGDAZeTif0rwNY"></firebase-app>
-        <firebase-auth id="auth" user="{{user}}" provider="facebook"></firebase-auth>
         <app-location route="{{route}}"></app-location>
         <div>
             <div>
                 <say-what-navigation user="[[user]]"></say-what-navigation>
             </div>
             <div>
-                <app-container route="{{route}}" user="[[user]]" source="[[source]]"></app-container>
+                <app-container
+                        route="{{route}}"
+                        user="[[user]]"
+                        storage-reference="[[storageReference]]"
+                        database-reference="[[databaseReference]]"></app-container>
             </div>
         </div>
     </template>
@@ -27,28 +26,70 @@
             is: 'say-what',
 
             listeners: {
-                'request-login': '_handleLogin',
-                'request-logout': '_handleLogout'
+                'user-login': '_handleUserLogin',
+                'user-logout': '_handleUserLogout'
             },
 
             properties: {
                 user: {
                     type: Object,
                     value: undefined
-                }
+                },
+                databaseReference: {
+                    type: Object,
+                    value: undefined
+                },
+                storageReference: {
+                    type: Object,
+                    value: undefined
+                },
+                apiKey: String,
+                authDomain: String,
+                databaseUrl: String,
+                storageBucket: String
             },
 
-            _handleLogin: function () {
-                this.$.auth.signInWithPopup()
-                    .then(function(response) {this.user = response.user;}.bind(this))
-                    .catch(function(error) {this.user = undefined;}.bind(this));
+            ready: function () {
+                this._handleReference.call(this);
             },
 
-            _handleLogout: function () {
-                this.$.auth.signOut()
-                    .then(function () {this.user = undefined;}.bind(this))
-                    .catch(function () {this.user = undefined;}.bind(this));
+            _handleReference: function () {
+                var config = {
+                    apiKey: this.apiKey,
+                    authDomain: this.authDomain,
+                    databaseURL: this.databaseUrl,
+                    storageBucket: this.storageBucket
+                };
+
+                firebase.initializeApp(config);
+
+                this.databaseReference = firebase.database().ref();
+                this.storageReference = firebase.storage().ref();
+
+                firebase.auth().onAuthStateChanged(function (user) {
+                    this.user = user ? user : undefined ;
+                }.bind(this));
+            },
+
+            _handleUserLogin: function () {
+                var provider = new firebase.auth.FacebookAuthProvider();
+
+                firebase.auth().signInWithPopup(provider).then(function (result) {
+                    this.user = result.user;
+                }.bind(this)).catch(function (error) {
+                    console.log(error);
+                });
+
+            },
+
+            _handleUserLogout: function () {
+                firebase.auth().signOut().then(function() {
+                    this.user = null;
+                }.bind(this), function(error) {
+                    console.log(error);
+                });
             }
+
         });
     </script>
 </dom-module>
