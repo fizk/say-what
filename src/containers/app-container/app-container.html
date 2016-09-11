@@ -9,8 +9,6 @@
 <link rel="import" href="../articles-container/articles-container.html">
 <link rel="import" href="../about-container/about-container.html">
 
-<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
-
 <dom-module id="app-container">
     <template>
         <app-route
@@ -45,7 +43,16 @@
             },
             
             ready: function () {
-                this.firebase = new Firebase(this.source);
+
+                var config = {
+                    apiKey: "1108706409210716",
+                    authDomain: "klingogbang.firebaseapp.com",
+                    databaseURL: this.source
+                };
+
+                firebase.initializeApp(config, 'some_other_app');
+
+                this.firebase = firebase.database().ref();
 
                 this.firebase.on('child_changed', function (snapshot) {
                     var changedPost = snapshot.val();
