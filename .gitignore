@@ -135,4 +135,7 @@ jspm_packages
 
 # SayWhat
 public/data
+public/images
 public/bower_components
+
+spider

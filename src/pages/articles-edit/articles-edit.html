@@ -10,9 +10,20 @@
     <template>
         <h1>[[article.content.title]]</h1>
         <form id="form" is="iron-form" on-submit="_updateArticle">
+            <template is="dom-repeat" items="[[article.authors]]">
+                <paper-input value="[[item]]" label="Author" name="authors"></paper-input>
+            </template>
             <paper-input value="[[article.content.title]]" label="Title" name="title"></paper-input>
             <paper-textarea value="[[article.content.text]]" label="Body" name="text"></paper-textarea>
-            <paper-toggle-button label="Pinned"></paper-toggle-button>
+            <label>
+                From data
+                <input type="date" name="from" value="[[article.date.from]]">
+            </label>
+            <label>
+                To data
+                <input type="date" name="to" value="[[article.date.to]]">
+            </label>
+            <paper-toggle-button label="Pinned" checked="[[article.pinned]]" name="pinned">Pinned</paper-toggle-button>
             <button>Send</button>
         </form>
     </template>
@@ -42,13 +53,14 @@
             _updateArticle: function (event) {
                 if (this.article) {
                     event.preventDefault();
-
                     var formData = event.currentTarget.serialize();
                     var data = Object.assign({}, this.article, {
                         content: {
                             title: formData.title,
                             text: formData.text
-                        }
+                        },
+                        pinned: formData.pinned ? true : false,
+                        authors: (Array.isArray(formData.authors)) ? formData.authors : [formData.authors]
                     });
                     delete data.$key;
 

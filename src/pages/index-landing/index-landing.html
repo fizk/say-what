@@ -59,7 +59,7 @@
 
             _handleArticleListUpdate: function (articles) {
                 this.mainArticles = articles.filter(function (article) {
-                    return /*article.pinned == false &&*/ new Date(article.date.from) < new Date();
+                    return article.pinned == false && new Date(article.date.from) < new Date();
                 }).slice(0, 3);
 
                 this.pinnedArticles = articles.filter(function (article) {
@@ -67,7 +67,7 @@
                 }).slice(0, 2);
 
                 this.upcomingArticles = articles.filter(function (article) {
-                    return /*article.pinned == false &&*/ new Date(article.date.from) > new Date();
+                    return article.pinned == false && new Date(article.date.from) > new Date();
                 });
             },
 
