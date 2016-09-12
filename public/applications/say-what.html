@@ -10690,6 +10690,32 @@ Example:
 
   </script>
 </dom-module>
+<script>
+    window.ArticleBehaviors = window.ArticleBehaviors || {};
+
+    ArticleBehaviors.UrlHelpers = {
+
+        _articleURL: function (slug) {
+            return '/articles/' + slug;
+        },
+
+        _articleListURL: function () {
+            return '/articles';
+        },
+
+        _articleEditURL: function (slug) {
+            return '/articles/' + slug + '/edit';
+        },
+
+        _aboutURL: function () {
+            return '/about'
+        },
+
+        _homeURL: function () {
+            return '/';
+        }
+    }
+</script>
 <dom-module id="index-landing" assetpath="../pages/index-landing/">
     <template>
 
@@ -10698,7 +10724,7 @@ Example:
             <template is="dom-repeat" items="[[mainArticles]]">
                 <li>
                     <img src="[[item.thumbnail.placeholder]]">
-                    <a href="[[_computeArticleUrl(item.$key)]]">[[item.content.title]]</a>
+                    <a href="[[_articleURL(item.$key)]]">[[item.content.title]]</a>
                 </li>
             </template>
         </ul>
@@ -10707,7 +10733,7 @@ Example:
             <template is="dom-repeat" items="[[upcomingArticles]]">
                 <li>
                     <img src="[[item.thumbnail.placeholder]]">
-                    <a href="[[_computeArticleUrl(item.$key)]]">[[item.content.title]]</a>
+                    <a href="[[_articleURL(item.$key)]]">[[item.content.title]]</a>
                 </li>
             </template>
         </ul>
@@ -10716,7 +10742,7 @@ Example:
             <template is="dom-repeat" items="[[pinnedArticles]]">
                 <li>
                     <img src="[[item.thumbnail.placeholder]]">
-                    <a href="[[_computeArticleUrl(item.$key)]]">[[item.content.title]]</a>
+                    <a href="[[_articleURL(item.$key)]]">[[item.content.title]]</a>
                 </li>
             </template>
         </ul>
@@ -10727,6 +10753,10 @@ Example:
 
             observers: [
                 '_handleArticleListUpdate(articles)'
+            ],
+
+            behaviors: [
+                ArticleBehaviors.UrlHelpers
             ],
 
             properties: {
@@ -10749,7 +10779,7 @@ Example:
 
             _handleArticleListUpdate: function (articles) {
                 this.mainArticles = articles.filter(function (article) {
-                    return /*article.pinned == false &&*/ new Date(article.date.from) < new Date();
+                    return article.pinned == false && new Date(article.date.from) < new Date();
                 }).slice(0, 3);
 
                 this.pinnedArticles = articles.filter(function (article) {
@@ -10757,12 +10787,8 @@ Example:
                 }).slice(0, 2);
 
                 this.upcomingArticles = articles.filter(function (article) {
-                    return /*article.pinned == false &&*/ new Date(article.date.from) > new Date();
+                    return article.pinned == false && new Date(article.date.from) > new Date();
                 });
-            },
-
-            _computeArticleUrl: function (slug) {
-                return '/articles/' + slug;
             }
         })
     </script>
@@ -13099,7 +13125,7 @@ as you would a regular DOM element:
         <iron-image placeholder="[[article.poster.placeholder]]" src="[[article.poster.path]]" preload="" fade="" sizing="cover" width="[[article.poster.width]]" height="[[article.poster.height]]"></iron-image>
 
         <template is="dom-if" if="[[user]]">
-            <a href$="[[_computeArticleEditUrl(slug)]]">edit</a>
+            <a href$="[[_articleEditURL(slug)]]">edit</a>
         </template>
         <h1>[[article.content.title]]</h1>
         <marked-element markdown="[[article.content.text]]"></marked-element>
@@ -13111,10 +13137,10 @@ as you would a regular DOM element:
 
         <template is="dom-if" if="[[previous]]">
             <img src="[[previous.thumbnail.placeholder]]">
-            &lt;&lt; <a href$="[[_computeArticleUrl(previous.$key)]]">[[previous.content.title]]</a>
+            &lt;&lt; <a href$="[[_articleURL(previous.$key)]]">[[previous.content.title]]</a>
         </template>
         <template is="dom-if" if="[[next]]">
-            <a href$="[[_computeArticleUrl(next.$key)]]">[[next.content.title]]</a> &gt;&gt;
+            <a href$="[[_articleURL(next.$key)]]">[[next.content.title]]</a> &gt;&gt;
             <img src="[[next.thumbnail.placeholder]]">
         </template>
 
@@ -13125,6 +13151,10 @@ as you would a regular DOM element:
 
             observers: [
                 '_handleArticlesUpdate(articles, slug)'
+            ],
+
+            behaviors: [
+                ArticleBehaviors.UrlHelpers
             ],
 
             properties: {
@@ -13165,14 +13195,6 @@ as you would a regular DOM element:
 
                 this.previous = articles[index-1] ? articles[index-1] : undefined;
                 this.next = articles[index+1] ? articles[index+1] : undefined;
-            },
-
-            _computeArticleEditUrl: function (slug) {
-                return '/articles/' + slug + '/edit';
-            },
-
-            _computeArticleUrl: function (slug) {
-                return '/articles/' + slug;
             }
         });
     </script>
@@ -13184,9 +13206,9 @@ as you would a regular DOM element:
         <ul>
             <template is="dom-repeat" items="{{articles}}">
                 <li>
-                    <img src="[[item.thumbnail.placeholder]]"> <a href="[[_computeArticleUrl(item.$key)]]">[[item.content.title]]</a>
+                    <img src="[[item.thumbnail.placeholder]]"> <a href="[[_articleURL(item.$key)]]">[[item.content.title]]</a>
                     <template is="dom-if" if="[[user]]">
-                        <a href="[[_computeArticleEditUrl(item.$key)]]">edit</a>
+                        <a href="[[_articleEditURL(item.$key)]]">edit</a>
                     </template>
                 </li>
             </template>
@@ -13196,13 +13218,9 @@ as you would a regular DOM element:
         Polymer({
             is: 'articles-list',
 
-            _computeArticleUrl: function (slug) {
-                return '/articles/' + slug;
-            },
-
-            _computeArticleEditUrl: function (slug) {
-                return '/articles/' + slug + '/edit';
-            }
+            behaviors: [
+                ArticleBehaviors.UrlHelpers
+            ]
         });
     </script>
 </dom-module>
@@ -20906,11 +20924,22 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
 </dom-module>
 <dom-module id="articles-edit" assetpath="../pages/articles-edit/">
     <template>
-        <h1>[[article.content.title]]</h1>
+        <h1><a href="[[_articleURL(article.$key)]]">[[article.content.title]]</a></h1>
         <form id="form" is="iron-form" on-submit="_updateArticle">
+            <template is="dom-repeat" items="[[article.authors]]">
+                <paper-input value="[[item]]" label="Author" name="authors"></paper-input>
+            </template>
             <paper-input value="[[article.content.title]]" label="Title" name="title"></paper-input>
             <paper-textarea value="[[article.content.text]]" label="Body" name="text"></paper-textarea>
-            <paper-toggle-button label="Pinned"></paper-toggle-button>
+            <label>
+                From data
+                <input type="date" name="from" value="[[article.date.from]]">
+            </label>
+            <label>
+                To data
+                <input type="date" name="to" value="[[article.date.to]]">
+            </label>
+            <paper-toggle-button label="Pinned" checked="[[article.pinned]]" name="pinned">Pinned</paper-toggle-button>
             <button>Send</button>
         </form>
     </template>
@@ -20920,6 +20949,10 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
 
             observers: [
                 '_observerArticles(articles, slug)'
+            ],
+
+            behaviors: [
+                ArticleBehaviors.UrlHelpers
             ],
 
             properties: {
@@ -20940,13 +20973,14 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
             _updateArticle: function (event) {
                 if (this.article) {
                     event.preventDefault();
-
                     var formData = event.currentTarget.serialize();
                     var data = Object.assign({}, this.article, {
                         content: {
                             title: formData.title,
                             text: formData.text
-                        }
+                        },
+                        pinned: formData.pinned ? true : false,
+                        authors: (Array.isArray(formData.authors)) ? formData.authors : [formData.authors]
                     });
                     delete data.$key;
 
@@ -21127,9 +21161,9 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
     <template>
         <nav>
             <ul>
-                <li><a href="/">/</a></li>
-                <li><a href="/articles">/articles</a></li>
-                <li><a href="/about">/about</a></li>
+                <li><a href="[[_homeURL()]]">/</a></li>
+                <li><a href="[[_articleListURL()]]">/articles</a></li>
+                <li><a href="[[_aboutURL()]]">/about</a></li>
             </ul>
 
             <template is="dom-if" if="[[!user]]">
@@ -21147,6 +21181,10 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
     <script>
         Polymer({
             is: 'say-what-navigation',
+
+            behaviors: [
+                ArticleBehaviors.UrlHelpers
+            ],
 
             properties: {
                 user: {

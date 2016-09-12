@@ -1,5 +1,7 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 
+<link rel="import" href="../../behaviors/article-behaviors.html">
+
 <dom-module id="articles-list">
     <template>
         <h1>articles-list</h1>
@@ -7,9 +9,9 @@
         <ul>
             <template is="dom-repeat" items="{{articles}}">
                 <li>
-                    <img src="[[item.thumbnail.placeholder]]"> <a href="[[_computeArticleUrl(item.$key)]]">[[item.content.title]]</a>
+                    <img src="[[item.thumbnail.placeholder]]"> <a href="[[_articleURL(item.$key)]]">[[item.content.title]]</a>
                     <template is="dom-if" if="[[user]]">
-                        <a href="[[_computeArticleEditUrl(item.$key)]]">edit</a>
+                        <a href="[[_articleEditURL(item.$key)]]">edit</a>
                     </template>
                 </li>
             </template>
@@ -19,13 +21,9 @@
         Polymer({
             is: 'articles-list',
 
-            _computeArticleUrl: function (slug) {
-                return '/articles/' + slug;
-            },
-
-            _computeArticleEditUrl: function (slug) {
-                return '/articles/' + slug + '/edit';
-            }
+            behaviors: [
+                ArticleBehaviors.UrlHelpers
+            ]
         });
     </script>
 </dom-module>

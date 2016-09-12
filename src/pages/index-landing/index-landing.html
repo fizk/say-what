@@ -1,5 +1,7 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 
+<link rel="import" href="../../behaviors/article-behaviors.html">
+
 <dom-module id="index-landing">
     <template>
 
@@ -8,7 +10,7 @@
             <template is="dom-repeat" items="[[mainArticles]]">
                 <li>
                     <img src="[[item.thumbnail.placeholder]]">
-                    <a href="[[_computeArticleUrl(item.$key)]]">[[item.content.title]]</a>
+                    <a href="[[_articleURL(item.$key)]]">[[item.content.title]]</a>
                 </li>
             </template>
         </ul>
@@ -17,7 +19,7 @@
             <template is="dom-repeat" items="[[upcomingArticles]]">
                 <li>
                     <img src="[[item.thumbnail.placeholder]]">
-                    <a href="[[_computeArticleUrl(item.$key)]]">[[item.content.title]]</a>
+                    <a href="[[_articleURL(item.$key)]]">[[item.content.title]]</a>
                 </li>
             </template>
         </ul>
@@ -26,7 +28,7 @@
             <template is="dom-repeat" items="[[pinnedArticles]]">
                 <li>
                     <img src="[[item.thumbnail.placeholder]]">
-                    <a href="[[_computeArticleUrl(item.$key)]]">[[item.content.title]]</a>
+                    <a href="[[_articleURL(item.$key)]]">[[item.content.title]]</a>
                 </li>
             </template>
         </ul>
@@ -37,6 +39,10 @@
 
             observers: [
                 '_handleArticleListUpdate(articles)'
+            ],
+
+            behaviors: [
+                ArticleBehaviors.UrlHelpers
             ],
 
             properties: {
@@ -59,7 +65,7 @@
 
             _handleArticleListUpdate: function (articles) {
                 this.mainArticles = articles.filter(function (article) {
-                    return /*article.pinned == false &&*/ new Date(article.date.from) < new Date();
+                    return article.pinned == false && new Date(article.date.from) < new Date();
                 }).slice(0, 3);
 
                 this.pinnedArticles = articles.filter(function (article) {
@@ -67,12 +73,8 @@
                 }).slice(0, 2);
 
                 this.upcomingArticles = articles.filter(function (article) {
-                    return /*article.pinned == false &&*/ new Date(article.date.from) > new Date();
+                    return article.pinned == false && new Date(article.date.from) > new Date();
                 });
-            },
-
-            _computeArticleUrl: function (slug) {
-                return '/articles/' + slug;
             }
         })
     </script>
