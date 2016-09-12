@@ -2,6 +2,8 @@
 <link rel="import" href="../../../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../../../bower_components/marked-element/marked-element.html">
 
+<link rel="import" href="../../behaviors/article-behaviors.html">
+
 <dom-module id="articles-article">
     <template>
 
@@ -14,7 +16,7 @@
                     height="[[article.poster.height]]"></iron-image>
 
         <template is="dom-if" if="[[user]]">
-            <a href$="[[_computeArticleEditUrl(slug)]]">edit</a>
+            <a href$="[[_articleEditURL(slug)]]">edit</a>
         </template>
         <h1>[[article.content.title]]</h1>
         <marked-element markdown="[[article.content.text]]"></marked-element>
@@ -26,10 +28,10 @@
 
         <template is="dom-if" if="[[previous]]">
             <img src="[[previous.thumbnail.placeholder]]">
-            &lt;&lt; <a href$="[[_computeArticleUrl(previous.$key)]]">[[previous.content.title]]</a>
+            &lt;&lt; <a href$="[[_articleURL(previous.$key)]]">[[previous.content.title]]</a>
         </template>
         <template is="dom-if" if="[[next]]">
-            <a href$="[[_computeArticleUrl(next.$key)]]">[[next.content.title]]</a> &gt;&gt;
+            <a href$="[[_articleURL(next.$key)]]">[[next.content.title]]</a> &gt;&gt;
             <img src="[[next.thumbnail.placeholder]]">
         </template>
 
@@ -40,6 +42,10 @@
 
             observers: [
                 '_handleArticlesUpdate(articles, slug)'
+            ],
+
+            behaviors: [
+                ArticleBehaviors.UrlHelpers
             ],
 
             properties: {
@@ -80,14 +86,6 @@
 
                 this.previous = articles[index-1] ? articles[index-1] : undefined;
                 this.next = articles[index+1] ? articles[index+1] : undefined;
-            },
-
-            _computeArticleEditUrl: function (slug) {
-                return '/articles/' + slug + '/edit';
-            },
-
-            _computeArticleUrl: function (slug) {
-                return '/articles/' + slug;
             }
         });
     </script>

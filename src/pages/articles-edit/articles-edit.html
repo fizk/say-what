@@ -6,9 +6,11 @@
 <link rel="import" href="../../../bower_components/iron-form/iron-form.html">
 <link rel="import" href="../../../bower_components/paper-toggle-button/paper-toggle-button.html">
 
+<link rel="import" href="../../behaviors/article-behaviors.html">
+
 <dom-module id="articles-edit">
     <template>
-        <h1>[[article.content.title]]</h1>
+        <h1><a href="[[_articleURL(article.$key)]]">[[article.content.title]]</a></h1>
         <form id="form" is="iron-form" on-submit="_updateArticle">
             <template is="dom-repeat" items="[[article.authors]]">
                 <paper-input value="[[item]]" label="Author" name="authors"></paper-input>
@@ -33,6 +35,10 @@
 
             observers: [
                 '_observerArticles(articles, slug)'
+            ],
+
+            behaviors: [
+                ArticleBehaviors.UrlHelpers
             ],
 
             properties: {
