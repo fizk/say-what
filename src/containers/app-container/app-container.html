@@ -82,14 +82,16 @@
                     var slug = event.detail.slug;
 
                     this.databaseReference.child('work/' + slug).set(data);
-//
+
 //                    var file = document.createElement('input');
 //                    file.type = 'file';
 //                    document.body.appendChild(file);
 //                    file.addEventListener('change', function (event) {
 //
 //                        this.storageReference.child('funny-image.jpg').put(event.target.files[0]).then(function (snapshot) {
+//
 //                            console.log(snapshot.downloadURL);
+//                            console.log(event.target.files[0]);
 //                            data.poster = snapshot.downloadURL;
 //                            this.databaseReference.child('work/' + slug).set(data);
 //
