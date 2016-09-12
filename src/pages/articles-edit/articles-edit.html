@@ -8,22 +8,11 @@
 
 <dom-module id="articles-edit">
     <template>
-        <h1>articles-edit</h1>
-        [[article.title]]
+        <h1>[[article.content.title]]</h1>
         <form id="form" is="iron-form" on-submit="_updateArticle">
-            <fieldset>
-                <legend>English</legend>
-                <paper-input value="[[article.content.en.title]]" label="EN Title" name="en_title"></paper-input>
-                <paper-textarea value="[[article.content.en.text]]" label="EN Body" name="en_text"></paper-textarea>
-            </fieldset>
-            <fieldset>
-                <legend>Islenska</legend>
-                <paper-input value="[[article.content.is.title]]" label="IS Title" name="is_title"></paper-input>
-                <paper-textarea value="[[article.content.is.text]]" label="IS Body" name="is_text"></paper-textarea>
-            </fieldset>
-            <fieldset>
-                <paper-toggle-button label="Pinned"></paper-toggle-button>
-            </fieldset>
+            <paper-input value="[[article.content.title]]" label="Title" name="title"></paper-input>
+            <paper-textarea value="[[article.content.text]]" label="Body" name="text"></paper-textarea>
+            <paper-toggle-button label="Pinned"></paper-toggle-button>
             <button>Send</button>
         </form>
     </template>
@@ -57,14 +46,8 @@
                     var formData = event.currentTarget.serialize();
                     var data = Object.assign({}, this.article, {
                         content: {
-                            is: {
-                                title: formData.is_title,
-                                text: formData.is_text
-                            },
-                            en: {
-                                title: formData.en_title,
-                                text: formData.en_text
-                            }
+                            title: formData.title,
+                            text: formData.text
                         }
                     });
                     delete data.$key;

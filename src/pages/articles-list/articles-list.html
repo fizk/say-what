@@ -7,7 +7,7 @@
         <ul>
             <template is="dom-repeat" items="{{articles}}">
                 <li>
-                    <img src="[[item.icon]]"> <a href="[[_computeArticleUrl(item.$key)]]">[[item.content.is.title]]</a>
+                    <img src="[[item.thumbnail.placeholder]]"> <a href="[[_computeArticleUrl(item.$key)]]">[[item.content.title]]</a>
                     <template is="dom-if" if="[[user]]">
                         <a href="[[_computeArticleEditUrl(item.$key)]]">edit</a>
                     </template>

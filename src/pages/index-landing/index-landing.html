@@ -6,19 +6,28 @@
         <h2>Main articles</h2>
         <ul>
             <template is="dom-repeat" items="[[mainArticles]]">
-                <li><a href="[[_computeArticleUrl(item.$key)]]">[[item.content.is.title]]</a></li>
+                <li>
+                    <img src="[[item.thumbnail.placeholder]]">
+                    <a href="[[_computeArticleUrl(item.$key)]]">[[item.content.title]]</a>
+                </li>
             </template>
         </ul>
         <h2>Upcomming articles</h2>
         <ul>
             <template is="dom-repeat" items="[[upcomingArticles]]">
-                <li><a href="[[_computeArticleUrl(item.$key)]]">[[item.content.is.title]]</a></li>
+                <li>
+                    <img src="[[item.thumbnail.placeholder]]">
+                    <a href="[[_computeArticleUrl(item.$key)]]">[[item.content.title]]</a>
+                </li>
             </template>
         </ul>
         <h2>Pinned articles</h2>
         <ul>
             <template is="dom-repeat" items="[[pinnedArticles]]">
-                <li><a href="[[_computeArticleUrl(item.$key)]]">[[item.content.is.title]]</a></li>
+                <li>
+                    <img src="[[item.thumbnail.placeholder]]">
+                    <a href="[[_computeArticleUrl(item.$key)]]">[[item.content.title]]</a>
+                </li>
             </template>
         </ul>
     </template>
@@ -50,7 +59,7 @@
 
             _handleArticleListUpdate: function (articles) {
                 this.mainArticles = articles.filter(function (article) {
-                    return article.pinned == false && new Date(article.date.from) < new Date();
+                    return /*article.pinned == false &&*/ new Date(article.date.from) < new Date();
                 }).slice(0, 3);
 
                 this.pinnedArticles = articles.filter(function (article) {
@@ -58,7 +67,7 @@
                 }).slice(0, 2);
 
                 this.upcomingArticles = articles.filter(function (article) {
-                    return article.pinned == false && new Date(article.date.from) > new Date();
+                    return /*article.pinned == false &&*/ new Date(article.date.from) > new Date();
                 });
             },
 
