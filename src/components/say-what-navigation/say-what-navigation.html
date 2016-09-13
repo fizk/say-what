@@ -1,7 +1,7 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../../bower_components/paper-button/paper-button.html">
 
-<link rel="import" href="../../behaviors/article-behaviors.html">
+<link rel="import" href="../../behaviors/article-url-helpers.html">
 
 <dom-module id="say-what-navigation">
     <template>
@@ -20,6 +20,7 @@
                 <img src="[[user.photoURL]]" />
                 <p>[[user.displayName]]</p>
                 <a href="#" on-click="_requestLogout">log out</a>
+                <a href="[[_articleCreateURL()]]">create new article</a>
             </template>
 
         </nav>

@@ -5,6 +5,7 @@
 <link rel="import" href="../../pages/articles-article/articles-article.html">
 <link rel="import" href="../../pages/articles-list/articles-list.html">
 <link rel="import" href="../../pages/articles-edit/articles-edit.html">
+<link rel="import" href="../../pages/articles-create/articles-create.html">
 
 <dom-module id="articles-container">
     <template>
@@ -28,6 +29,7 @@
             <articles-list key="" articles="{{articles}}" user="[[user]]"></articles-list>
             <articles-article key="selected" articles="{{articles}}" slug="[[slug]]" user="[[user]]"></articles-article>
             <articles-edit key="edit" slug="[[slug]]" articles="[[articles]]"></articles-edit>
+            <articles-create key="create"></articles-create>
         </iron-pages>
 
     </template>
@@ -59,6 +61,9 @@
                 if (!path) {
                     this.slug = undefined;
                     this.pageSelected = '';
+                } else if (path.match(/^\/create$/)) {
+                    this.slug = undefined;
+                    this.pageSelected = 'create';
                 } else if (path.match(/^\/[0-9a-zA-Z\-]+$/)) {
                     this.pageSelected = 'selected';
                     this.slug = path.substring(1);

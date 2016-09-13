@@ -139,3 +139,7 @@ public/images
 public/bower_components
 
 spider
+
+.firebaserc
+database.rules.json
+firebase.json

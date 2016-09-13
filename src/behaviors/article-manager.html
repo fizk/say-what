@@ -1,0 +1,120 @@
+<link rel="import" href="../components/get-slug/get-slug.html">
+
+<script>
+    window.ArticleBehaviors = window.ArticleBehaviors || {};
+
+    ArticleBehaviors.ArticleManager = {
+        listeners: {
+            'article-update': '_articleUpdate',
+            'article-create': '_articleCreate'
+        },
+
+        properties: {
+            articles: {
+                type: Array
+            },
+
+            databaseReference: {
+                type: Object,
+                observer: '_handleDatabaseReference'
+            },
+
+            storageReference: {
+                type: Object,
+                observer: '_handleStorageReference'
+            }
+        },
+
+        _handleDatabaseReference: function (reference) {
+            if (reference) {
+                this.databaseReference.on('child_changed', function (snapshot) {
+                    var changedPost = snapshot.val();
+                    console.log("The updated post title is ", changedPost);
+                });
+
+                this.databaseReference.child("/work").on("value", function(snapshot) {
+                    this.articles = this._articleRead(snapshot.val());
+                }.bind(this));
+            }
+        },
+
+        _handleStorageReference: function (storage) {
+
+
+        },
+
+        _articleCreate: function (event) {
+            if (this.databaseReference) {
+                var article = event.detail.article;
+                var form = event.detail.form;
+                var articleData = this._mergeArticleData(form, article);
+                var slug = getSlug(articleData.content.title);
+
+                this.databaseReference.child('work/' + slug).set(articleData);
+            } else {
+                throw new Error('No database reference');
+            }
+        },
+
+        _articleRead: function (snapshot) {
+            var articles = [];
+            for (article in snapshot) {
+                snapshot[article].$key = article;
+                articles.push(snapshot[article]);
+            }
+
+            return articles.sort(function (a, b) {
+                return new Date(b.date.from) - new Date(a.date.from)
+            });
+        },
+
+        _articleUpdate: function (event) {
+            if (this.databaseReference) {
+                var article = event.detail.article;
+                var form = event.detail.form;
+                var slug = event.detail.slug;
+                var articleData = this._mergeArticleData(form, article);
+
+                this.databaseReference.child('work/' + slug).set(articleData);
+
+//                    var file = document.createElement('input');
+//                    file.type = 'file';
+//                    document.body.appendChild(file);
+//                    file.addEventListener('change', function (event) {
+//
+//                        this.storageReference.child('funny-image.jpg').put(event.target.files[0]).then(function (snapshot) {
+//
+//                            console.log(snapshot.downloadURL);
+//                            console.log(event.target.files[0]);
+//                            data.poster = snapshot.downloadURL;
+//                            this.databaseReference.child('work/' + slug).set(data);
+//
+//                        }.bind(this)).catch(function (error) {
+//                            console.log(error)
+//                        }.bind(this));
+//                    }.bind(this));
+//                    file.click();
+//                    console.log(this);
+            } else {
+                throw new Error('No database reference');
+            }
+        },
+        
+        _mergeArticleData: function (form, article) {
+            var articleData = Object.assign({}, article, {
+                content: {
+                    title: form.title,
+                    text: form.text
+                },
+                date: {
+                    from: form.from,
+                    to: form.to
+                },
+                pinned: form.pinned ? true : false,
+                authors: (Array.isArray(form.authors)) ? form.authors : [form.authors]
+            });
+            delete articleData.$key;
+            return articleData;
+        }
+    }
+</script>

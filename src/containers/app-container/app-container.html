@@ -8,6 +8,7 @@
 <link rel="import" href="../index-container/index-container.html">
 <link rel="import" href="../articles-container/articles-container.html">
 <link rel="import" href="../about-container/about-container.html">
+<link rel="import" href="../../behaviors/article-manager.html">
 
 <dom-module id="app-container">
     <template>
@@ -28,81 +29,9 @@
         Polymer({
             is: 'app-container',
 
-            listeners: {
-                'article-update': '_articleUpdate'
-            },
-
-            properties: {
-                articles: {
-                    type: Array
-                },
-
-                databaseReference: {
-                    type: Object,
-                    observer: '_handleDatabaseReference'
-                },
-
-                storageReference: {
-                    type: Object,
-                    observer: '_handleStorageReference'
-                }
-            },
-
-            _handleDatabaseReference: function (reference) {
-                if (reference) {
-                    this.databaseReference.on('child_changed', function (snapshot) {
-                        var changedPost = snapshot.val();
-                        console.log("The updated post title is ", changedPost);
-                    });
-
-                    this.databaseReference.child("/work").on("value", function(snapshot) {
-                        var articles = [];
-                        var data = snapshot.val();
-                        for (article in data) {
-                            data[article].$key = article;
-                            articles.push(data[article]);
-                        }
-
-                        this.articles = articles.sort(function (a, b) {
-                            return new Date(b.date.from) - new Date(a.date.from)
-                        });
-
-                    }.bind(this));
-                }
-            },
-
-            _handleStorageReference: function (storage) {
-
-
-            },
-
-            _articleUpdate: function (event) {
-                if (this.databaseReference) {
-                    var data = event.detail.data;
-                    var slug = event.detail.slug;
-
-                    this.databaseReference.child('work/' + slug).set(data);
-
-//                    var file = document.createElement('input');
-//                    file.type = 'file';
-//                    document.body.appendChild(file);
-//                    file.addEventListener('change', function (event) {
-//
-//                        this.storageReference.child('funny-image.jpg').put(event.target.files[0]).then(function (snapshot) {
-//
-//                            console.log(snapshot.downloadURL);
-//                            console.log(event.target.files[0]);
-//                            data.poster = snapshot.downloadURL;
-//                            this.databaseReference.child('work/' + slug).set(data);
-//
-//                        }.bind(this)).catch(function (error) {
-//                            console.log(error)
-//                        }.bind(this));
-//                    }.bind(this));
-//                    file.click();
-//                    console.log(this);
-                }
-            }
+            behaviors: [
+                ArticleBehaviors.ArticleManager
+            ]
         });
     </script>
 </dom-module>
