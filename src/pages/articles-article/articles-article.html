@@ -41,7 +41,7 @@
             is: 'articles-article',
 
             observers: [
-                '_handleArticlesUpdate(articles, slug)'
+                '_handleArticlesChange(articles, slug)'
             ],
 
             behaviors: [
@@ -72,15 +72,22 @@
                 }
             },
 
-            _handleArticlesUpdate: function (articles, slug) {
+            /**
+             * Properties observer.
+             *
+             * Will fire when articles or slug changes.
+             *
+             * @param {Array} articles
+             * @param {string} slug
+             * @private
+             */
+            _handleArticlesChange: function (articles, slug) {
                 var index = undefined;
-
                 this.article = articles.filter(function (article, i) {
                     if (article.$key == slug) {
                         index = i;
                         return true;
                     }
-
                     return false;
                 }).slice(0, 1).pop();
 

@@ -10693,28 +10693,70 @@ Example:
 <script>
     window.ArticleBehaviors = window.ArticleBehaviors || {};
 
+    /**
+     * Helper object that can generate URLs for different
+     * section of the Article application.
+     */
     ArticleBehaviors.UrlHelpers = {
 
+        /**
+         * Generate an URL for article.
+         *
+         * @param {string} slug
+         * @returns {string}
+         * @private
+         */
         _articleURL: function (slug) {
             return '/articles/' + slug;
         },
 
+        /**
+         * Generate an URL for article list.
+         *
+         * @returns {string}
+         * @private
+         */
         _articleListURL: function () {
             return '/articles';
         },
 
+        /**
+         * Generate an URL for article's edit page.
+         *
+         * @param {string} slug
+         * @returns {string}
+         * @private
+         */
         _articleEditURL: function (slug) {
             return '/articles/' + slug + '/edit';
         },
 
+        /**
+         * Generate an URL for article create page.
+         *
+         * @returns {string}
+         * @private
+         */
         _articleCreateURL: function () {
             return '/articles/create';
         },
 
+        /**
+         * Generate an URL for about page.
+         *
+         * @returns {string}
+         * @private
+         */
         _aboutURL: function () {
             return '/about'
         },
 
+        /**
+         * Generate an URL for homepage.
+         *
+         * @returns {string}
+         * @private
+         */
         _homeURL: function () {
             return '/';
         }
@@ -10722,7 +10764,6 @@ Example:
 </script>
 <dom-module id="index-landing" assetpath="../pages/index-landing/">
     <template>
-
         <h2>Main articles</h2>
         <ul>
             <template is="dom-repeat" items="[[mainArticles]]">
@@ -10781,6 +10822,15 @@ Example:
                 }
             },
 
+            /**
+             * Properties observer.
+             *
+             * Will listen for Articles array updates and filter entries into
+             * categories.
+             *
+             * @param articles
+             * @private
+             */
             _handleArticleListUpdate: function (articles) {
                 this.mainArticles = articles.filter(function (article) {
                     return article.pinned == false && new Date(article.date.from) < new Date();
@@ -13154,7 +13204,7 @@ as you would a regular DOM element:
             is: 'articles-article',
 
             observers: [
-                '_handleArticlesUpdate(articles, slug)'
+                '_handleArticlesChange(articles, slug)'
             ],
 
             behaviors: [
@@ -13185,15 +13235,22 @@ as you would a regular DOM element:
                 }
             },
 
-            _handleArticlesUpdate: function (articles, slug) {
+            /**
+             * Properties observer.
+             *
+             * Will fire when articles or slug changes.
+             *
+             * @param {Array} articles
+             * @param {string} slug
+             * @private
+             */
+            _handleArticlesChange: function (articles, slug) {
                 var index = undefined;
-
                 this.article = articles.filter(function (article, i) {
                     if (article.$key == slug) {
                         index = i;
                         return true;
                     }
-
                     return false;
                 }).slice(0, 1).pop();
 
@@ -20953,8 +21010,17 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
             properties: {
                 article: Object
             },
-            
-            _submitArticleForm: function () {
+
+            /**
+             * Action handler.
+             *
+             * Will fire when form is submitted.
+             * Will then relay the responsibility to a higher component.
+             *
+             * @param {Event} event
+             * @private
+             */
+            _submitArticleForm: function (event) {
                 this.fire('submit-article', this.$.form);
             }
         })
@@ -20996,6 +21062,15 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
                 }
             },
 
+            /**
+             * Event listener.
+             *
+             * Listening for when the Article Form is submitted.
+             * Will relay the the data onto higher component that stores article.
+             *
+             * @param {Event} event
+             * @private
+             */
             _updateArticle: function (event) {
                 event.preventDefault();
 
@@ -21008,6 +21083,17 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
                 }
             },
 
+            /**
+             * Properties observer.
+             *
+             * Will fire when article or slug is changed.
+             * Will search for the article being updated in an array of all articles,
+             * and pass that onto the Article Form.
+             *
+             * @param articles
+             * @param slug
+             * @private
+             */
             _observerArticles: function (articles, slug) {
                 this.article = articles.filter(function (article) {
                     return article.$key == slug;
@@ -21047,6 +21133,15 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
                 }
             },
 
+            /**
+             * Event listener.
+             *
+             * Listening for when the Article Form is submitted.
+             * Will relay the the data onto higher component that stores article.
+             *
+             * @param {Event} event
+             * @private
+             */
             _createArticle: function (event) {
                 event.preventDefault();
 
@@ -21092,6 +21187,10 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
                 },
                 slug: {
                     type: String
+                },
+
+                user: {
+                    type: Object
                 }
             },
 
@@ -21102,6 +21201,7 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
              * @todo this is terrible...
              */
             _observerRoutePath: function (path) {
+                console.log(this.user);
                 if (!path) {
                     this.slug = undefined;
                     this.pageSelected = '';
@@ -21111,7 +21211,7 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
                 } else if (path.match(/^\/[0-9a-zA-Z\-]+$/)) {
                     this.pageSelected = 'selected';
                     this.slug = path.substring(1);
-                } else if (path.match(/^\/[0-9a-zA-Z\-]+\/edit$/)) { //TODO ... && this.user
+                } else if (path.match(/^\/[0-9a-zA-Z\-]+\/edit$/)) {
                     this.pageSelected = 'edit';
                     this.slug = path.match(/(\/)([0-9a-zA-Z\-]+)(\/edit)$/)[2];
                 } else {
@@ -21314,11 +21414,29 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
                 }
             },
 
+            /**
+             * Action handler.
+             *
+             * When login action is requested, this handler relays that to
+             * a higher component.
+             *
+             * @param {Event} event
+             * @private
+             */
             _requestLogin: function (event) {
                 event.preventDefault();
                 this.fire('user-login');
             },
 
+            /**
+             * Action handler.
+             *
+             * When logout action is requested, this handler relays that to
+             * a higher component.
+             *
+             * @param {Event} event
+             * @private
+             */
             _requestLogout: function (event) {
                 event.preventDefault();
                 this.fire('user-logout');
@@ -21366,10 +21484,20 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
                 storageBucket: String
             },
 
-            ready: function () {
+            /**
+             * Attached
+             *
+             * When this component, initialize...
+             */
+            attached: function () {
                 this._handleReference.call(this);
             },
 
+            /**
+             * Configure and initialize Firebase.
+             *
+             * @private
+             */
             _handleReference: function () {
                 var config = {
                     apiKey: this.apiKey,
@@ -21388,6 +21516,13 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
                 }.bind(this));
             },
 
+            /**
+             * Event listener.
+             *
+             * Login in user through Firebase.
+             *
+             * @private
+             */
             _handleUserLogin: function () {
                 var provider = new firebase.auth.FacebookAuthProvider();
 
@@ -21399,6 +21534,13 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
 
             },
 
+            /**
+             * Event listener.
+             *
+             * Log out user through Firebase.
+             *
+             * @private
+             */
             _handleUserLogout: function () {
                 firebase.auth().signOut().then(function() {
                     this.user = null;

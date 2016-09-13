@@ -27,8 +27,17 @@
             properties: {
                 article: Object
             },
-            
-            _submitArticleForm: function () {
+
+            /**
+             * Action handler.
+             *
+             * Will fire when form is submitted.
+             * Will then relay the responsibility to a higher component.
+             *
+             * @param {Event} event
+             * @private
+             */
+            _submitArticleForm: function (event) {
                 this.fire('submit-article', this.$.form);
             }
         })

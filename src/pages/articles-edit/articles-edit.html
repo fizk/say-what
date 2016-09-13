@@ -45,6 +45,15 @@
                 }
             },
 
+            /**
+             * Event listener.
+             *
+             * Listening for when the Article Form is submitted.
+             * Will relay the the data onto higher component that stores article.
+             *
+             * @param {Event} event
+             * @private
+             */
             _updateArticle: function (event) {
                 event.preventDefault();
 
@@ -57,6 +66,17 @@
                 }
             },
 
+            /**
+             * Properties observer.
+             *
+             * Will fire when article or slug is changed.
+             * Will search for the article being updated in an array of all articles,
+             * and pass that onto the Article Form.
+             *
+             * @param articles
+             * @param slug
+             * @private
+             */
             _observerArticles: function (articles, slug) {
                 this.article = articles.filter(function (article) {
                     return article.$key == slug;

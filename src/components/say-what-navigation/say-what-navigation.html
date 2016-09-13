@@ -40,11 +40,29 @@
                 }
             },
 
+            /**
+             * Action handler.
+             *
+             * When login action is requested, this handler relays that to
+             * a higher component.
+             *
+             * @param {Event} event
+             * @private
+             */
             _requestLogin: function (event) {
                 event.preventDefault();
                 this.fire('user-login');
             },
 
+            /**
+             * Action handler.
+             *
+             * When logout action is requested, this handler relays that to
+             * a higher component.
+             *
+             * @param {Event} event
+             * @private
+             */
             _requestLogout: function (event) {
                 event.preventDefault();
                 this.fire('user-logout');
