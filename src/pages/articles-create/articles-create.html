@@ -9,21 +9,17 @@
 <link rel="import" href="../../components/article-form/article-form.html">
 <link rel="import" href="../../behaviors/article-url-helpers.html">
 
-<dom-module id="articles-edit">
+<dom-module id="articles-create">
     <template>
-        <h1><a href="[[_articleURL(article.$key)]]">[[article.content.title]]</a></h1>
+        <h1>Create new Article</h1>
         <article-form article="[[article]]"></article-form>
     </template>
     <script>
         Polymer({
-            is: 'articles-edit',
-
-            observers: [
-                '_observerArticles(articles, slug)'
-            ],
+            is: 'articles-create',
 
             listeners: {
-                'submit-article': '_updateArticle'
+                'submit-article': '_createArticle'
             },
 
             behaviors: [
@@ -37,11 +33,10 @@
                 },
 
                 article: {
-                    type: Object
-                },
-
-                slug: {
-                    type: String
+                    type: Object,
+                    value: {
+                        authors: [undefined]
+                    }
                 }
             },
 
@@ -54,33 +49,14 @@
              * @param {Event} event
              * @private
              */
-            _updateArticle: function (event) {
+            _createArticle: function (event) {
                 event.preventDefault();
 
-                if (this.article && this.slug) {
-                    this.fire('article-update', {
-                        article: this.article,
-                        slug: this.slug,
-                        form: event.detail.serialize()
-                    });
-                }
-            },
-
-            /**
-             * Properties observer.
-             *
-             * Will fire when article or slug is changed.
-             * Will search for the article being updated in an array of all articles,
-             * and pass that onto the Article Form.
-             *
-             * @param articles
-             * @param slug
-             * @private
-             */
-            _observerArticles: function (articles, slug) {
-                this.article = articles.filter(function (article) {
-                    return article.$key == slug;
-                }).pop();
+                this.fire('article-create', {
+                    article: {},
+                    form: event.detail.serialize(),
+                    slug: undefined
+                });
             }
         })
     </script>

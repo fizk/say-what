@@ -49,10 +49,20 @@
                 storageBucket: String
             },
 
-            ready: function () {
+            /**
+             * Attached
+             *
+             * When this component, initialize...
+             */
+            attached: function () {
                 this._handleReference.call(this);
             },
 
+            /**
+             * Configure and initialize Firebase.
+             *
+             * @private
+             */
             _handleReference: function () {
                 var config = {
                     apiKey: this.apiKey,
@@ -71,6 +81,13 @@
                 }.bind(this));
             },
 
+            /**
+             * Event listener.
+             *
+             * Login in user through Firebase.
+             *
+             * @private
+             */
             _handleUserLogin: function () {
                 var provider = new firebase.auth.FacebookAuthProvider();
 
@@ -82,6 +99,13 @@
 
             },
 
+            /**
+             * Event listener.
+             *
+             * Log out user through Firebase.
+             *
+             * @private
+             */
             _handleUserLogout: function () {
                 firebase.auth().signOut().then(function() {
                     this.user = null;

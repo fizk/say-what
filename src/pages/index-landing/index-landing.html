@@ -1,10 +1,9 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 
-<link rel="import" href="../../behaviors/article-behaviors.html">
+<link rel="import" href="../../behaviors/article-url-helpers.html">
 
 <dom-module id="index-landing">
     <template>
-
         <h2>Main articles</h2>
         <ul>
             <template is="dom-repeat" items="[[mainArticles]]">
@@ -63,6 +62,15 @@
                 }
             },
 
+            /**
+             * Properties observer.
+             *
+             * Will listen for Articles array updates and filter entries into
+             * categories.
+             *
+             * @param articles
+             * @private
+             */
             _handleArticleListUpdate: function (articles) {
                 this.mainArticles = articles.filter(function (article) {
                     return article.pinned == false && new Date(article.date.from) < new Date();

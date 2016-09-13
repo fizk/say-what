@@ -1,0 +1,72 @@
+<script>
+    window.ArticleBehaviors = window.ArticleBehaviors || {};
+
+    /**
+     * Helper object that can generate URLs for different
+     * section of the Article application.
+     */
+    ArticleBehaviors.UrlHelpers = {
+
+        /**
+         * Generate an URL for article.
+         *
+         * @param {string} slug
+         * @returns {string}
+         * @private
+         */
+        _articleURL: function (slug) {
+            return '/articles/' + slug;
+        },
+
+        /**
+         * Generate an URL for article list.
+         *
+         * @returns {string}
+         * @private
+         */
+        _articleListURL: function () {
+            return '/articles';
+        },
+
+        /**
+         * Generate an URL for article's edit page.
+         *
+         * @param {string} slug
+         * @returns {string}
+         * @private
+         */
+        _articleEditURL: function (slug) {
+            return '/articles/' + slug + '/edit';
+        },
+
+        /**
+         * Generate an URL for article create page.
+         *
+         * @returns {string}
+         * @private
+         */
+        _articleCreateURL: function () {
+            return '/articles/create';
+        },
+
+        /**
+         * Generate an URL for about page.
+         *
+         * @returns {string}
+         * @private
+         */
+        _aboutURL: function () {
+            return '/about'
+        },
+
+        /**
+         * Generate an URL for homepage.
+         *
+         * @returns {string}
+         * @private
+         */
+        _homeURL: function () {
+            return '/';
+        }
+    }
+</script>

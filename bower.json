@@ -23,6 +23,7 @@
     "iron-form": "PolymerElements/iron-form#^1.1.4",
     "paper-toggle-button": "PolymerElements/paper-toggle-button#^1.2.0",
     "marked-element": "PolymerElements/marked-element#^1.2.0",
-    "paper-date-picker": "polymer-paper-date-picker#^1.2.0"
+    "paper-date-picker": "polymer-paper-date-picker#^1.2.0",
+    "speakingurl": "^9.0.0"
   }
 }

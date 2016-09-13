@@ -1,0 +1,45 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<dom-module id="article-form">
+    <template>
+        <form id="form" is="iron-form" on-submit="_submitArticleForm">
+            <template is="dom-repeat" items="[[article.authors]]">
+                <paper-input value="[[item]]" label="Author" name="authors"></paper-input>
+            </template>
+            <paper-input value="[[article.content.title]]" label="Title" name="title"></paper-input>
+            <paper-textarea value="[[article.content.text]]" label="Body" name="text"></paper-textarea>
+            <label>
+                From data
+                <input type="date" name="from" value="[[article.date.from]]">
+            </label>
+            <label>
+                To data
+                <input type="date" name="to" value="[[article.date.to]]">
+            </label>
+            <paper-toggle-button label="Pinned" checked="[[article.pinned]]" name="pinned">Pinned</paper-toggle-button>
+            <button>Send</button>
+        </form>
+    </template>
+    <script>
+        Polymer({
+            is: 'article-form',
+
+            properties: {
+                article: Object
+            },
+
+            /**
+             * Action handler.
+             *
+             * Will fire when form is submitted.
+             * Will then relay the responsibility to a higher component.
+             *
+             * @param {Event} event
+             * @private
+             */
+            _submitArticleForm: function (event) {
+                this.fire('submit-article', this.$.form);
+            }
+        })
+    </script>
+</dom-module>
