@@ -9,6 +9,7 @@
 <link rel="import" href="../articles-container/articles-container.html">
 <link rel="import" href="../about-container/about-container.html">
 <link rel="import" href="../../behaviors/article-manager.html">
+<link rel="import" href="../../behaviors/about-manager.html">
 
 <dom-module id="app-container">
     <template>
@@ -22,7 +23,7 @@
         <iron-pages selected="[[routeData.page]]" attr-for-selected="key">
             <index-container key="" articles="[[articles]]"></index-container>
             <articles-container key="articles" route="{{subRoute}}" articles="[[articles]]" user="[[user]]"></articles-container>
-            <about-container key="about"></about-container>
+            <about-container key="about" about="[[about]]"></about-container>
         </iron-pages>
     </template>
     <script>
@@ -30,8 +31,28 @@
             is: 'app-container',
 
             behaviors: [
-                ArticleBehaviors.ArticleManager
-            ]
+                ArticleBehaviors.ArticleManager,
+                ArticleBehaviors.AboutManager
+            ],
+
+            observers: [
+                    //ArticleBehaviors.ArticleManager entry point
+                '_handleAboutDatabaseReference(databaseReference)',
+                '_handleAboutStorageReference(storageReference)',
+                    //ArticleBehaviors.AboutManager entry point
+                '_handleArticleDatabaseReference(databaseReference)',
+                '_handleArticleStorageReference(storageReference)'
+            ],
+
+            properties: {
+                databaseReference: {
+                    type: Object
+                },
+
+                storageReference: {
+                    type: Object
+                }
+            }
         });
     </script>
 </dom-module>

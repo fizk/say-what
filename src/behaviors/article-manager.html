@@ -12,33 +12,21 @@
         properties: {
             articles: {
                 type: Array
-            },
-
-            databaseReference: {
-                type: Object,
-                observer: '_handleDatabaseReference'
-            },
-
-            storageReference: {
-                type: Object,
-                observer: '_handleStorageReference'
             }
         },
 
-        _handleDatabaseReference: function (reference) {
-            if (reference) {
-                this.databaseReference.on('child_changed', function (snapshot) {
-                    var changedPost = snapshot.val();
-                    console.log("The updated post title is ", changedPost);
-                });
+        _handleArticleDatabaseReference: function (reference) {
+            this.databaseReference.on('child_changed', function (snapshot) {
+                var changedPost = snapshot.val();
+                console.log("The updated post title is ", changedPost);
+            });
 
-                this.databaseReference.child("/work").on("value", function(snapshot) {
-                    this.articles = this._articleRead(snapshot.val());
-                }.bind(this));
-            }
+            this.databaseReference.child("/work").on("value", function(snapshot) {
+                this.articles = this._articleRead(snapshot.val());
+            }.bind(this));
         },
 
-        _handleStorageReference: function (storage) {
+        _handleArticleStorageReference: function (storage) {
 
 
         },

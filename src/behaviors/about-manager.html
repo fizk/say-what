@@ -1,0 +1,29 @@
+<link rel="import" href="../components/get-slug/get-slug.html">
+
+<script>
+    window.ArticleBehaviors = window.ArticleBehaviors || {};
+
+    ArticleBehaviors.AboutManager = {
+        listeners: {
+            'article-update': '_articleUpdate',
+            'article-create': '_articleCreate'
+        },
+
+        properties: {
+            about: {
+                type: Object
+            }
+        },
+
+        _handleAboutDatabaseReference: function (reference) {
+            this.databaseReference.child("/about").on("value", function(snapshot) {
+                this.about = snapshot.val();
+            }.bind(this));
+
+        },
+
+        _handleAboutStorageReference: function (storage) {
+
+        }
+    }
+</script>

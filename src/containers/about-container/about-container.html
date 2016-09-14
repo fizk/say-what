@@ -1,8 +1,28 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-image/iron-image.html">
+
 
 <dom-module id="about-container">
     <template>
         <h1>about-container</h1>
+        [[about.description]]
+
+        <dl>
+        <template is="dom-repeat" items="[[about.staff]]">
+            <dt>[[item.name]]</dt>
+            <dd>[[item.role]]</dd>
+        </template>
+        </dl>
+
+        <template is="dom-repeat" items="[[about.images]]">
+            <iron-image placeholder="[[item.placeholder]]"
+                        src="[[item.path]]"
+                        preload
+                        fade
+                        sizing="cover"
+                        width="[[item.width]]"
+                        height="[[item.height]]"></iron-image>
+        </template>
     </template>
     <script>
         Polymer({
