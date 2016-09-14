@@ -21224,13 +21224,26 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
 <dom-module id="about-container" assetpath="../containers/about-container/">
     <template>
         <h1>about-container</h1>
+        [[about.description]]
+
+        <dl>
+        <template is="dom-repeat" items="[[about.staff]]">
+            <dt>[[item.name]]</dt>
+            <dd>[[item.role]]</dd>
+        </template>
+        </dl>
+
+        <template is="dom-repeat" items="[[about.images]]">
+            <iron-image placeholder="[[item.placeholder]]" src="[[item.path]]" preload="" fade="" sizing="cover" width="[[item.width]]" height="[[item.height]]"></iron-image>
+        </template>
     </template>
     <script>
         Polymer({
             is: 'about-container'
         })
     </script>
-</dom-module><script>/**
+</dom-module>
+<script>/**
  * speakingurl
  * @version v9.0.0
  * @link http://pid.github.io/speakingurl/
@@ -21249,33 +21262,21 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
         properties: {
             articles: {
                 type: Array
-            },
-
-            databaseReference: {
-                type: Object,
-                observer: '_handleDatabaseReference'
-            },
-
-            storageReference: {
-                type: Object,
-                observer: '_handleStorageReference'
             }
         },
 
-        _handleDatabaseReference: function (reference) {
-            if (reference) {
-                this.databaseReference.on('child_changed', function (snapshot) {
-                    var changedPost = snapshot.val();
-                    console.log("The updated post title is ", changedPost);
-                });
+        _handleArticleDatabaseReference: function (reference) {
+            this.databaseReference.on('child_changed', function (snapshot) {
+                var changedPost = snapshot.val();
+                console.log("The updated post title is ", changedPost);
+            });
 
-                this.databaseReference.child("/work").on("value", function(snapshot) {
-                    this.articles = this._articleRead(snapshot.val());
-                }.bind(this));
-            }
+            this.databaseReference.child("/work").on("value", function(snapshot) {
+                this.articles = this._articleRead(snapshot.val());
+            }.bind(this));
         },
 
-        _handleStorageReference: function (storage) {
+        _handleArticleStorageReference: function (storage) {
 
 
         },
@@ -21355,6 +21356,33 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
         }
     }
 </script>
+<script>
+    window.ArticleBehaviors = window.ArticleBehaviors || {};
+
+    ArticleBehaviors.AboutManager = {
+        listeners: {
+            'article-update': '_articleUpdate',
+            'article-create': '_articleCreate'
+        },
+
+        properties: {
+            about: {
+                type: Object
+            }
+        },
+
+        _handleAboutDatabaseReference: function (reference) {
+            this.databaseReference.child("/about").on("value", function(snapshot) {
+                this.about = snapshot.val();
+            }.bind(this));
+
+        },
+
+        _handleAboutStorageReference: function (storage) {
+
+        }
+    }
+</script>
 <dom-module id="app-container" assetpath="../containers/app-container/">
     <template>
         <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subRoute}}">
@@ -21363,7 +21391,7 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
         <iron-pages selected="[[routeData.page]]" attr-for-selected="key">
             <index-container key="" articles="[[articles]]"></index-container>
             <articles-container key="articles" route="{{subRoute}}" articles="[[articles]]" user="[[user]]"></articles-container>
-            <about-container key="about"></about-container>
+            <about-container key="about" about="[[about]]"></about-container>
         </iron-pages>
     </template>
     <script>
@@ -21371,8 +21399,28 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
             is: 'app-container',
 
             behaviors: [
-                ArticleBehaviors.ArticleManager
-            ]
+                ArticleBehaviors.ArticleManager,
+                ArticleBehaviors.AboutManager
+            ],
+
+            observers: [
+                    //ArticleBehaviors.ArticleManager entry point
+                '_handleAboutDatabaseReference(databaseReference)',
+                '_handleAboutStorageReference(storageReference)',
+                    //ArticleBehaviors.AboutManager entry point
+                '_handleArticleDatabaseReference(databaseReference)',
+                '_handleArticleStorageReference(storageReference)'
+            ],
+
+            properties: {
+                databaseReference: {
+                    type: Object
+                },
+
+                storageReference: {
+                    type: Object
+                }
+            }
         });
     </script>
 </dom-module>
