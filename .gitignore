@@ -143,3 +143,5 @@ spider
 .firebaserc
 database.rules.json
 firebase.json
+
+src/**/styles.html
