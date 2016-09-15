@@ -1,36 +1,43 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 
 <link rel="import" href="../../behaviors/article-url-helpers.html">
+<link rel="import" href="./index-landing-style.html">
 
 <dom-module id="index-landing">
+    <style include="index-landing-css"></style>
+
     <template>
-        <h2>Main articles</h2>
-        <ul>
-            <template is="dom-repeat" items="[[mainArticles]]">
-                <li>
-                    <img src="[[item.thumbnail.placeholder]]">
-                    <a href="[[_articleURL(item.$key)]]">[[item.content.title]]</a>
-                </li>
-            </template>
-        </ul>
-        <h2>Upcomming articles</h2>
-        <ul>
-            <template is="dom-repeat" items="[[upcomingArticles]]">
-                <li>
-                    <img src="[[item.thumbnail.placeholder]]">
-                    <a href="[[_articleURL(item.$key)]]">[[item.content.title]]</a>
-                </li>
-            </template>
-        </ul>
-        <h2>Pinned articles</h2>
-        <ul>
-            <template is="dom-repeat" items="[[pinnedArticles]]">
-                <li>
-                    <img src="[[item.thumbnail.placeholder]]">
-                    <a href="[[_articleURL(item.$key)]]">[[item.content.title]]</a>
-                </li>
-            </template>
-        </ul>
+        <div class="index-main__presentation"></div>
+        <div class="index-main__information">
+            <h2>Main articles</h2>
+            <ul>
+                <template is="dom-repeat" items="[[mainArticles]]">
+                    <li>
+                        <img src="[[item.thumbnail.placeholder]]">
+                        <a href="[[_articleURL(item.$key)]]">[[item.content.title]]</a>
+                    </li>
+                </template>
+            </ul>
+            <h2>Upcomming articles</h2>
+            <ul>
+                <template is="dom-repeat" items="[[upcomingArticles]]">
+                    <li>
+                        <img src="[[item.thumbnail.placeholder]]">
+                        <a href="[[_articleURL(item.$key)]]">[[item.content.title]]</a>
+                    </li>
+                </template>
+            </ul>
+            <h2>Pinned articles</h2>
+            <ul>
+                <template is="dom-repeat" items="[[pinnedArticles]]">
+                    <li>
+                        <img src="[[item.thumbnail.placeholder]]">
+                        <a href="[[_articleURL(item.$key)]]">[[item.content.title]]</a>
+                    </li>
+                </template>
+            </ul>
+        </div>
+
     </template>
     <script>
         Polymer({

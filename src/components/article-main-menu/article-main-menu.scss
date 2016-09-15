@@ -1,0 +1,12 @@
+
+
+ul[role=menu] {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+
+    a {
+        color: antiquewhite;
+        text-decoration: none;
+    }
+}

@@ -1,0 +1,26 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-image/iron-image.html">
+
+<link rel="import" href="../../behaviors/article-url-helpers.html">
+<link rel="import" href="./article-user-card-style.html">
+
+<dom-module id="article-user-card">
+    <style include="article-user-card-css"></style>
+    <template>
+        <div>[[user.displayName]]</div>
+        <iron-image src="[[user.photoURL]]" sizing="cover"></iron-image>
+        <div class="user-card__options">
+            <a href="#" on-click="_requestLogout">Log out</a>
+            <a href="[[_articleCreateURL()]]">New article</a>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: 'article-user-card',
+
+            behaviors: [
+                ArticleBehaviors.UrlHelpers
+            ]
+        })
+    </script>
+</dom-module>

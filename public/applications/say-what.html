@@ -10762,35 +10762,65 @@ Example:
         }
     }
 </script>
-<dom-module id="index-landing" assetpath="../pages/index-landing/">
+<dom-module id="index-landing-css" assetpath="../pages/index-landing/">
+<template>
+<style>
+*, *:before, *:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+:host {
+  height: 100vh;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  background-color: #00acc1; }
+
+.index-main__presentation {
+  width: 50%; }
+
+.index-main__information {
+  width: 50%; }
+
+</style>
+</template>
+</dom-module><dom-module id="index-landing" assetpath="../pages/index-landing/">
+    <style include="index-landing-css"></style>
+
     <template>
-        <h2>Main articles</h2>
-        <ul>
-            <template is="dom-repeat" items="[[mainArticles]]">
-                <li>
-                    <img src="[[item.thumbnail.placeholder]]">
-                    <a href="[[_articleURL(item.$key)]]">[[item.content.title]]</a>
-                </li>
-            </template>
-        </ul>
-        <h2>Upcomming articles</h2>
-        <ul>
-            <template is="dom-repeat" items="[[upcomingArticles]]">
-                <li>
-                    <img src="[[item.thumbnail.placeholder]]">
-                    <a href="[[_articleURL(item.$key)]]">[[item.content.title]]</a>
-                </li>
-            </template>
-        </ul>
-        <h2>Pinned articles</h2>
-        <ul>
-            <template is="dom-repeat" items="[[pinnedArticles]]">
-                <li>
-                    <img src="[[item.thumbnail.placeholder]]">
-                    <a href="[[_articleURL(item.$key)]]">[[item.content.title]]</a>
-                </li>
-            </template>
-        </ul>
+        <div class="index-main__presentation"></div>
+        <div class="index-main__information">
+            <h2>Main articles</h2>
+            <ul>
+                <template is="dom-repeat" items="[[mainArticles]]">
+                    <li>
+                        <img src="[[item.thumbnail.placeholder]]">
+                        <a href="[[_articleURL(item.$key)]]">[[item.content.title]]</a>
+                    </li>
+                </template>
+            </ul>
+            <h2>Upcomming articles</h2>
+            <ul>
+                <template is="dom-repeat" items="[[upcomingArticles]]">
+                    <li>
+                        <img src="[[item.thumbnail.placeholder]]">
+                        <a href="[[_articleURL(item.$key)]]">[[item.content.title]]</a>
+                    </li>
+                </template>
+            </ul>
+            <h2>Pinned articles</h2>
+            <ul>
+                <template is="dom-repeat" items="[[pinnedArticles]]">
+                    <li>
+                        <img src="[[item.thumbnail.placeholder]]">
+                        <a href="[[_articleURL(item.$key)]]">[[item.content.title]]</a>
+                    </li>
+                </template>
+            </ul>
+        </div>
+
     </template>
     <script>
         Polymer({
@@ -21424,35 +21454,114 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
         });
     </script>
 </dom-module>
-<dom-module id="say-what-navigation" assetpath="../components/say-what-navigation/">
+<dom-module id="article-user-card-css" assetpath="../components/article-user-card/">
+<template>
+<style>
+:host {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-align: center;
+  align-items: center;
+  color: antiquewhite; }
+
+iron-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%; }
+
+.user-card__options > * {
+  display: block;
+  color: antiquewhite;
+  text-decoration: none; }
+
+</style>
+</template>
+</dom-module><dom-module id="article-user-card" assetpath="../components/article-user-card/">
+    <style include="article-user-card-css"></style>
     <template>
-        <nav>
-            <ul>
-                <li><a href="[[_homeURL()]]">/</a></li>
-                <li><a href="[[_articleListURL()]]">/articles</a></li>
-                <li><a href="[[_aboutURL()]]">/about</a></li>
-            </ul>
+        <div>[[user.displayName]]</div>
+        <iron-image src="[[user.photoURL]]" sizing="cover"></iron-image>
+        <div class="user-card__options">
+            <a href="#" on-click="_requestLogout">Log out</a>
+            <a href="[[_articleCreateURL()]]">New article</a>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: 'article-user-card',
 
-            <template is="dom-if" if="[[!user]]">
-                <a href="#" on-click="_requestLogin">Log in</a>
-            </template>
+            behaviors: [
+                ArticleBehaviors.UrlHelpers
+            ]
+        })
+    </script>
+</dom-module>
+<dom-module id="article-main-menu-css" assetpath="../components/article-main-menu/">
+<template>
+<style>
+ul[role=menu] {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  list-style: none; }
+  ul[role=menu] a {
+    color: antiquewhite;
+    text-decoration: none; }
 
-            <template is="dom-if" if="[[user]]">
-                <img src="[[user.photoURL]]">
-                <p>[[user.displayName]]</p>
-                <a href="#" on-click="_requestLogout">log out</a>
-                <a href="[[_articleCreateURL()]]">create new article</a>
-            </template>
+</style>
+</template>
+</dom-module><dom-module id="article-main-menu" assetpath="../components/article-main-menu/">
+    <style include="article-main-menu-css"></style>
+    <template>
+        <ul role="menu">
+            <li><a href="[[_homeURL()]]">/</a></li>
+            <li><a href="[[_articleListURL()]]">/articles</a></li>
+            <li><a href="[[_aboutURL()]]">/about</a></li>
+        </ul>
+    </template>
+    <script>
+        Polymer({
+            is: 'article-main-menu',
 
-        </nav>
+            behaviors: [
+                ArticleBehaviors.UrlHelpers
+            ]
+        })
+    </script>
+</dom-module>
+<dom-module id="say-what-navigation-css" assetpath="../components/say-what-navigation/">
+<template>
+<style>
+:host {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  background-color: #413240;
+  height: 80px; }
+
+</style>
+</template>
+</dom-module><dom-module id="say-what-navigation" assetpath="../components/say-what-navigation/">
+    <style include="say-what-navigation-css"></style>
+    <template>
+
+        <article-main-menu></article-main-menu>
+
+        <template is="dom-if" if="[[!user]]">
+            <a href="#" on-click="_requestLogin">Log in</a>
+        </template>
+
+        <template is="dom-if" if="[[user]]">
+            <article-user-card user="[[user]]"></article-user-card>
+        </template>
     </template>
     <script>
         Polymer({
             is: 'say-what-navigation',
-
-            behaviors: [
-                ArticleBehaviors.UrlHelpers
-            ],
 
             properties: {
                 user: {
@@ -21491,17 +21600,32 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
         })
     </script>
 </dom-module>
-</div><dom-module id="say-what">
+<dom-module id="say-what-css" assetpath="/">
+<template>
+<style>
+:host {
+  display: -ms-flexbox;
+  display: flex;
+  height: 100vh;
+  width: 100%; }
+
+nav {
+  width: 100%;
+  position: fixed; }
+
+</style>
+</template>
+</dom-module></div><dom-module id="say-what">
+    <style include="say-what-css"></style>
     <template>
         <app-location route="{{route}}"></app-location>
-        <div>
-            <div>
-                <say-what-navigation user="[[user]]"></say-what-navigation>
-            </div>
-            <div>
-                <app-container route="{{route}}" user="[[user]]" storage-reference="[[storageReference]]" database-reference="[[databaseReference]]"></app-container>
-            </div>
-        </div>
+        <nav>
+            <say-what-navigation user="[[user]]"></say-what-navigation>
+        </nav>
+        <main role="main">
+            <app-container route="{{route}}" user="[[user]]" storage-reference="[[storageReference]]" database-reference="[[databaseReference]]"></app-container>
+        </main>
+
     </template>
     <script>
         Polymer({

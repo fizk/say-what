@@ -1,0 +1,19 @@
+:host {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: antiquewhite;
+}
+
+iron-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+
+.user-card__options > * {
+    display: block;
+    color: antiquewhite;
+    text-decoration: none;
+}

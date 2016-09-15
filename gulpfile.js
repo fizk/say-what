@@ -30,17 +30,15 @@ gulp.task('css', function () {
             browsers: ['last 2 versions'],
             cascade: false,
             remove: false
-        }))
+        }).on('error', console.log))
         .pipe(stylemod({
-            // All files will be named 'styles.html'
             filename: function (file) {
                 return path.basename(file.path, path.extname(file.path)) + "-style";
             },
-            // Use '-css' suffix instead of '-styles' for module ids
             moduleId: function(file) {
                 return path.basename(file.path, path.extname(file.path)) + "-css";
             }
-        }))
+        }).on('error', console.log))
         .pipe(gulp.dest('./src'));
 });
 
