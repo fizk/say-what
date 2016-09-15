@@ -4,22 +4,23 @@
 
 <link rel="import" href="../containers/app-container/app-container.html">
 <link rel="import" href="../components/say-what-navigation/say-what-navigation.html">
+<link rel="import" href="./say-what-style.html">
 
 <dom-module id="say-what">
+    <style include="say-what-css"></style>
     <template>
         <app-location route="{{route}}"></app-location>
-        <div>
-            <div>
-                <say-what-navigation user="[[user]]"></say-what-navigation>
-            </div>
-            <div>
-                <app-container
-                        route="{{route}}"
-                        user="[[user]]"
-                        storage-reference="[[storageReference]]"
-                        database-reference="[[databaseReference]]"></app-container>
-            </div>
-        </div>
+        <nav>
+            <say-what-navigation user="[[user]]"></say-what-navigation>
+        </nav>
+        <main role="main">
+            <app-container
+                    route="{{route}}"
+                    user="[[user]]"
+                    storage-reference="[[storageReference]]"
+                    database-reference="[[databaseReference]]"></app-container>
+        </main>
+
     </template>
     <script>
         Polymer({
