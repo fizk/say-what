@@ -10752,6 +10752,16 @@ Example:
         },
 
         /**
+         * Generate an URL for artists.
+         *
+         * @returns {string}
+         * @private
+         */
+        _artistsURL: function () {
+            return '/artists';
+        },
+
+        /**
          * Generate an URL for homepage.
          *
          * @returns {string}
@@ -10762,6 +10772,75 @@ Example:
         }
     }
 </script>
+<dom-module id="authors-list" assetpath="../pages/authors-list/">
+    <template>
+        <h1>LIST</h1>
+        <ul>
+            <template is="dom-repeat" items="[[authors]]">
+                <li>
+                    [[item.name]]
+                    <ul>
+                        <template is="dom-repeat" items="[[item.articles]]">
+                            <li><a href="[[_articleURL(item.$key)]]">[[item.content.title]]</a></li>
+                        </template>
+                    </ul>
+                </li>
+            </template>
+        </ul>
+    </template>
+    <script>
+        Polymer({
+            is: 'authors-list',
+
+            behaviors: [
+                ArticleBehaviors.UrlHelpers
+            ]
+        })
+    </script>
+</dom-module>
+<dom-module id="authors-container" assetpath="../containers/authors-container/">
+    <template>
+        <authors-list authors="[[authors]]"></authors-list>
+    </template>
+    <script>
+        Polymer({
+            is: 'authors-container',
+
+            properties: {
+                authors: {
+                    type: Array
+                }
+            },
+
+            observers: [
+                '_handleArticlesUpdate(articles)'
+            ],
+
+            _handleArticlesUpdate: function (articles) {
+                var object = {};
+
+                articles.forEach(function (article) {
+
+                    article.authors.forEach(function (author) {
+                        if(!object.hasOwnProperty(author)) {
+                            object[author] = {
+                                name: author,
+                                articles: []
+                            };
+                        }
+                        object[author].articles.push(article);
+                    });
+                });
+
+                this.authors = Object.keys(object).map(function (key) {
+                    return object[key]
+                }).sort(function (a, b) {
+                    return a.name.localeCompare(b.name);
+                });
+            }
+        })
+    </script>
+</dom-module>
 <dom-module id="index-landing" assetpath="../pages/index-landing/">
     <template>
         <h2>Main articles</h2>
@@ -21359,10 +21438,13 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
         <app-route active="{{homeActive}}" route="[[route]]" pattern="/" tail="{{homeTail}}"></app-route>
         <app-route active="{{aboutActive}}" route="[[route]]" pattern="/about" tail="{{aboutTail}}"></app-route>
         <app-route active="{{articlesActive}}" route="[[route]]" pattern="/articles" tail="{{articlesTail}}"></app-route>
-        <iron-pages selected="[[_ironPageSelector(homeActive, aboutActive, articlesActive)]]" attr-for-selected="key">
+        <app-route active="{{artistsActive}}" route="[[route]]" pattern="/artists" tail="{{artistsTail}}"></app-route>
+        
+        <iron-pages selected="[[_ironPageSelector(homeActive, aboutActive, articlesActive, artistsActive)]]" attr-for-selected="key">
             <index-container key="home" articles="[[articles]]"></index-container>
             <articles-container key="articles" route="[[articlesTail]]" articles="[[articles]]" user="[[user]]"></articles-container>
             <about-container key="about" about="[[about]]"></about-container>
+            <authors-container key="artists" articles="[[articles]]"></authors-container>
         </iron-pages>
     </template>
     <script>
@@ -21393,13 +21475,15 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
                 }
             },
             
-            _ironPageSelector: function (home, about, articles) {
+            _ironPageSelector: function (home, about, articles, artists) {
                 if (home) {
                     return 'home';
                 } else if (about) {
                     return 'about';
                 } else if (articles) {
                     return 'articles'
+                } else if (artists) {
+                    return 'artists'
                 }
             }
         });
@@ -21409,9 +21493,10 @@ In order to apply the `Roboto` font to this element, make sure you've imported `
     <template>
         <nav>
             <ul>
-                <li><a href="[[_homeURL()]]">/</a></li>
-                <li><a href="[[_articleListURL()]]">/articles</a></li>
-                <li><a href="[[_aboutURL()]]">/about</a></li>
+                <li><a href="[[_homeURL()]]">KogB</a></li>
+                <li><a href="[[_articleListURL()]]">articles</a></li>
+                <li><a href="[[_artistsURL()]]">artists</a></li>
+                <li><a href="[[_aboutURL()]]">about</a></li>
             </ul>
 
             <template is="dom-if" if="[[!user]]">

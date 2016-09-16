@@ -5,6 +5,7 @@
 <link rel="import" href="../../../bower_components/polymerfire/firebase.html">
 
 <link rel="import" href="../app-container/app-container.html">
+<link rel="import" href="../authors-container/authors-container.html">
 <link rel="import" href="../index-container/index-container.html">
 <link rel="import" href="../articles-container/articles-container.html">
 <link rel="import" href="../about-container/about-container.html">
@@ -28,11 +29,17 @@
                 route="[[route]]"
                 pattern="/articles"
                 tail="{{articlesTail}}"></app-route>
+        <app-route
+                active="{{artistsActive}}"
+                route="[[route]]"
+                pattern="/artists"
+                tail="{{artistsTail}}"></app-route>
         
-        <iron-pages selected="[[_ironPageSelector(homeActive, aboutActive, articlesActive)]]" attr-for-selected="key">
+        <iron-pages selected="[[_ironPageSelector(homeActive, aboutActive, articlesActive, artistsActive)]]" attr-for-selected="key">
             <index-container key="home" articles="[[articles]]"></index-container>
             <articles-container key="articles" route="[[articlesTail]]" articles="[[articles]]" user="[[user]]"></articles-container>
             <about-container key="about" about="[[about]]"></about-container>
+            <authors-container key="artists" articles="[[articles]]"></authors-container>
         </iron-pages>
     </template>
     <script>
@@ -63,13 +70,15 @@
                 }
             },
             
-            _ironPageSelector: function (home, about, articles) {
+            _ironPageSelector: function (home, about, articles, artists) {
                 if (home) {
                     return 'home';
                 } else if (about) {
                     return 'about';
                 } else if (articles) {
                     return 'articles'
+                } else if (artists) {
+                    return 'artists'
                 }
             }
         });

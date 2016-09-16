@@ -1,0 +1,47 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../pages/authors-list/authors-list.html">
+
+<dom-module id="authors-container">
+    <template>
+        <authors-list authors="[[authors]]"></authors-list>
+    </template>
+    <script>
+        Polymer({
+            is: 'authors-container',
+
+            properties: {
+                authors: {
+                    type: Array
+                }
+            },
+
+            observers: [
+                '_handleArticlesUpdate(articles)'
+            ],
+
+            _handleArticlesUpdate: function (articles) {
+                var object = {};
+
+                articles.forEach(function (article) {
+
+                    article.authors.forEach(function (author) {
+                        if(!object.hasOwnProperty(author)) {
+                            object[author] = {
+                                name: author,
+                                articles: []
+                            };
+                        }
+                        object[author].articles.push(article);
+                    });
+                });
+
+                this.authors = Object.keys(object).map(function (key) {
+                    return object[key]
+                }).sort(function (a, b) {
+                    return a.name.localeCompare(b.name);
+                });
+            }
+        })
+    </script>
+</dom-module>

@@ -1,0 +1,30 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../behaviors/article-url-helpers.html">
+
+<dom-module id="authors-list">
+    <template>
+        <h1>LIST</h1>
+        <ul>
+            <template is="dom-repeat" items="[[authors]]">
+                <li>
+                    [[item.name]]
+                    <ul>
+                        <template is="dom-repeat" items="[[item.articles]]">
+                            <li><a href="[[_articleURL(item.$key)]]">[[item.content.title]]</a></li>
+                        </template>
+                    </ul>
+                </li>
+            </template>
+        </ul>
+    </template>
+    <script>
+        Polymer({
+            is: 'authors-list',
+
+            behaviors: [
+                ArticleBehaviors.UrlHelpers
+            ]
+        })
+    </script>
+</dom-module>
