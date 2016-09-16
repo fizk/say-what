@@ -14,15 +14,24 @@
 <dom-module id="app-container">
     <template>
         <app-route
-            route="{{route}}"
-            pattern="/:page"
-            data="{{routeData}}"
-            tail="{{subRoute}}">
-        </app-route>
-
-        <iron-pages selected="[[routeData.page]]" attr-for-selected="key">
-            <index-container key="" articles="[[articles]]"></index-container>
-            <articles-container key="articles" route="{{subRoute}}" articles="[[articles]]" user="[[user]]"></articles-container>
+                active="{{homeActive}}"
+                route="[[route]]"
+                pattern="/"
+                tail="{{homeTail}}"></app-route>
+        <app-route
+                active="{{aboutActive}}"
+                route="[[route]]"
+                pattern="/about"
+                tail="{{aboutTail}}"></app-route>
+        <app-route
+                active="{{articlesActive}}"
+                route="[[route]]"
+                pattern="/articles"
+                tail="{{articlesTail}}"></app-route>
+        
+        <iron-pages selected="[[_ironPageSelector(homeActive, aboutActive, articlesActive)]]" attr-for-selected="key">
+            <index-container key="home" articles="[[articles]]"></index-container>
+            <articles-container key="articles" route="[[articlesTail]]" articles="[[articles]]" user="[[user]]"></articles-container>
             <about-container key="about" about="[[about]]"></about-container>
         </iron-pages>
     </template>
@@ -51,6 +60,16 @@
 
                 storageReference: {
                     type: Object
+                }
+            },
+            
+            _ironPageSelector: function (home, about, articles) {
+                if (home) {
+                    return 'home';
+                } else if (about) {
+                    return 'about';
+                } else if (articles) {
+                    return 'articles'
                 }
             }
         });
