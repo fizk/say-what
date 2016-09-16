@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
 <link rel="import" href="../../bower_components/polymerfire/firebase.html">
 
 <link rel="import" href="../containers/app-container/app-container.html">
@@ -8,18 +9,12 @@
 <dom-module id="say-what">
     <template>
         <app-location route="{{route}}"></app-location>
-        <div>
-            <div>
-                <say-what-navigation user="[[user]]"></say-what-navigation>
-            </div>
-            <div>
-                <app-container
-                        route="{{route}}"
-                        user="[[user]]"
-                        storage-reference="[[storageReference]]"
-                        database-reference="[[databaseReference]]"></app-container>
-            </div>
-        </div>
+        <say-what-navigation user="[[user]]"></say-what-navigation>
+        <app-container
+                route="[[route]]"
+                user="[[user]]"
+                storage-reference="[[storageReference]]"
+                database-reference="[[databaseReference]]"></app-container>
     </template>
     <script>
         Polymer({

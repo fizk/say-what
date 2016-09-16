@@ -9,26 +9,28 @@
 
 <dom-module id="articles-container">
     <template>
+        <app-route
+                active="{{listActive}}"
+                route="[[route]]"
+                pattern="/"></app-route>
+        <app-route
+                active="{{createActive}}"
+                route="[[route]]"
+                pattern="/create"></app-route>
+        <app-route
+                active="{{editActive}}"
+                route="[[route]]"
+                pattern="/:slug/edit"></app-route>
+        <app-route
+                active="{{slugActive}}"
+                route="[[route]]"
+                data="{{slugData}}"
+                pattern="/:slug"></app-route>
 
-        <app-route
-                route="{{route}}"
-                path="/">
-        </app-route>
-        <app-route
-                route="{{route}}"
-                path="/:slug"
-                data="{{slugData}}">
-        </app-route>
-        <app-route
-                route="{{route}}"
-                path="/:slug/edit"
-                data="{{slugData}}">
-        </app-route>
-
-        <iron-pages selected="[[pageSelected]]" attr-for-selected="key">
-            <articles-list key="" articles="{{articles}}" user="[[user]]"></articles-list>
-            <articles-article key="selected" articles="{{articles}}" slug="[[slug]]" user="[[user]]"></articles-article>
-            <articles-edit key="edit" slug="[[slug]]" articles="[[articles]]"></articles-edit>
+        <iron-pages selected="[[_ironPageSelector(listActive, slugActive, createActive, editActive)]]" attr-for-selected="key">
+            <articles-list key="list" articles="{{articles}}" user="[[user]]"></articles-list>
+            <articles-article key="slug" articles="{{articles}}" slug="[[slugData.slug]]" user="[[user]]"></articles-article>
+            <articles-edit key="edit" slug="[[slugData.slug]]" articles="[[articles]]"></articles-edit>
             <articles-create key="create"></articles-create>
         </iron-pages>
 
@@ -37,46 +39,21 @@
         Polymer({
             is: 'articles-container',
 
-            observers: [
-                '_observerRoutePath(route.path)'
-            ],
-
             properties: {
-                pageSelected: {
-                    type: String,
-                    value: ''
-                },
-                slug: {
-                    type: String
-                },
-
                 user: {
                     type: Object
                 }
             },
 
-            /**
-             *
-             * @param path
-             * @private
-             * @todo this is terrible...
-             */
-            _observerRoutePath: function (path) {
-                if (!path) {
-                    this.slug = undefined;
-                    this.pageSelected = '';
-                } else if (path.match(/^\/create$/)) {
-                    this.slug = undefined;
-                    this.pageSelected = 'create';
-                } else if (path.match(/^\/[0-9a-zA-Z\-]+$/)) {
-                    this.pageSelected = 'selected';
-                    this.slug = path.substring(1);
-                } else if (path.match(/^\/[0-9a-zA-Z\-]+\/edit$/)) {
-                    this.pageSelected = 'edit';
-                    this.slug = path.match(/(\/)([0-9a-zA-Z\-]+)(\/edit)$/)[2];
+            _ironPageSelector: function (list, slug, create, edit) {
+                if (slug && !edit && !create) {
+                    return 'slug';
+                } else if(slug && edit && !create) {
+                    return 'edit';
+                } else if (slug && create) {
+                    return 'create';
                 } else {
-                    this.slug = undefined;
-                    this.pageSelected = '';
+                    return 'list';
                 }
             }
         })
